@@ -202,63 +202,157 @@
 
     // create the model for the E-R diagram
     const nodeDataArray = [
+      // {
+      //   key: 'Products',
+      //   location: new go.Point(250, 250),
+      //   items: [
+      //     { name: 'ProductID', iskey: true, figure: 'Decision', color: 'purple' },
+      //     { name: 'ProductName', iskey: false, figure: 'Hexagon', color: 'blue' },
+      //     { name: 'ItemDescription', iskey: false, figure: 'Hexagon', color: 'blue' },
+      //     { name: 'WholesalePrice', iskey: false, figure: 'Circle', color: 'green' },
+      //     { name: 'ProductPhoto', iskey: false, figure: 'TriangleUp', color: 'red' }
+      //   ],
+      //   inheritedItems: [
+      //     { name: 'SupplierID', iskey: false, figure: 'Decision', color: 'purple' },
+      //     { name: 'CategoryID', iskey: false, figure: 'Decision', color: 'purple' }
+      //   ]
+      // },
+      // {
+      //   key: 'Suppliers',
+      //   location: new go.Point(500, 0),
+      //   items: [
+      //     { name: 'SupplierID', iskey: true, figure: 'Decision', color: 'purple' },
+      //     { name: 'CompanyName', iskey: false, figure: 'Hexagon', color: 'blue' },
+      //     { name: 'ContactName', iskey: false, figure: 'Hexagon', color: 'blue' },
+      //     { name: 'Address', iskey: false, figure: 'Hexagon', color: 'blue' },
+      //     { name: 'ShippingDistance', iskey: false, figure: 'Circle', color: 'green' },
+      //     { name: 'Logo', iskey: false, figure: 'TriangleUp', color: 'red' }
+      //   ],
+      //   inheritedItems: []
+      // },
+      // {
+      //   key: 'Categories',
+      //   location: new go.Point(0, 30),
+      //   items: [
+      //     { name: 'CategoryID', iskey: true, figure: 'Decision', color: 'purple' },
+      //     { name: 'CategoryName', iskey: false, figure: 'Hexagon', color: 'blue' },
+      //     { name: 'Description', iskey: false, figure: 'Hexagon', color: 'blue' },
+      //     { name: 'Icon', iskey: false, figure: 'TriangleUp', color: 'red' }
+      //   ],
+      //   inheritedItems: [{ name: 'SupplierID', iskey: false, figure: 'Decision', color: 'purple' }]
+      // },
+      // {
+      //   key: 'Order Details',
+      //   location: new go.Point(600, 350),
+      //   items: [
+      //     { name: 'OrderID', iskey: true, figure: 'Decision', color: 'purple' },
+      //     { name: 'UnitPrice', iskey: false, figure: 'Circle', color: 'green' },
+      //     { name: 'Quantity', iskey: false, figure: 'Circle', color: 'green' },
+      //     { name: 'Discount', iskey: false, figure: 'Circle', color: 'green' }
+      //   ],
+      //   inheritedItems: [{ name: 'ProductID', iskey: false, figure: 'Decision', color: 'purple' }]
+      // }
+        
       {
-        key: 'Products',
+        key: 'Awards',
         location: new go.Point(250, 250),
         items: [
-          { name: 'ProductID', iskey: true, figure: 'Decision', color: 'purple' },
-          { name: 'ProductName', iskey: false, figure: 'Hexagon', color: 'blue' },
-          { name: 'ItemDescription', iskey: false, figure: 'Hexagon', color: 'blue' },
-          { name: 'WholesalePrice', iskey: false, figure: 'Circle', color: 'green' },
-          { name: 'ProductPhoto', iskey: false, figure: 'TriangleUp', color: 'red' }
-        ],
-        inheritedItems: [
-          { name: 'SupplierID', iskey: false, figure: 'Decision', color: 'purple' },
-          { name: 'CategoryID', iskey: false, figure: 'Decision', color: 'purple' }
+          {name: 'Award Name', isKey: true, figure: 'Decision', color: 'purple'}
+        ], 
+        // inheritedItems: [{ }]
+      },
+      {
+        key: 'Home Profile',
+        location: new go.Point(1000, 250),
+        items: [
+          {name: 'How often do you hang out with your family?', isKey: false}, 
+          {name: 'How often are you in your room when you are at home?', isKey: false},
+          {name: 'How often do you get into arguments with others in your home?', isKey: false},
+          {name: 'How many siblings do you have?', isKey: false},
+          {name: 'Do you live in a home, apartment, or townhome?', isKey: false},
+          {name: 'Do you have your own room?', isKey: false},
+          {name: 'How many adults live in your house?', isKey: false},
+          {name: 'What are your interactions like with other adults in your house?', isKey: false}, 
+          {name: 'How often do you have contact with adults in your house?', isKey: false},
+          {name: 'Who is Working', isKey: false},
+          {name: 'Supportive Adults at Home?', isKey: false},
+          {name: 'Any new or transient adults in house?', isKey: false}, 
+          {name: 'Additional Note:', isKey: false}
         ]
       },
       {
-        key: 'Suppliers',
-        location: new go.Point(500, 0),
+        key: 'Home Visit', 
+        location: new go.Point(850, 600),
         items: [
-          { name: 'SupplierID', iskey: true, figure: 'Decision', color: 'purple' },
-          { name: 'CompanyName', iskey: false, figure: 'Hexagon', color: 'blue' },
-          { name: 'ContactName', iskey: false, figure: 'Hexagon', color: 'blue' },
-          { name: 'Address', iskey: false, figure: 'Hexagon', color: 'blue' },
-          { name: 'ShippingDistance', iskey: false, figure: 'Circle', color: 'green' },
-          { name: 'Logo', iskey: false, figure: 'TriangleUp', color: 'red' }
-        ],
-        inheritedItems: []
+          {name: 'Date', isKye: false},
+          {name: 'Location', isKey: false}, 
+          {name: 'Attendees', isKey: false}, 
+          {name: 'Structural Safety', isKey: false}, 
+          {name: 'Resident Updates', isKey: false},
+          {name: 'Food Security', isKey: false}, 
+          {name: 'Curfew Compliance', isKey: false},
+          {name: 'Critical Incidences', isKey: false}, 
+          {name: 'Additional Notes', isKey: false}
+        ]
+
       },
       {
-        key: 'Categories',
-        location: new go.Point(0, 30),
+        key: 'School Profile',
+        location: new go.Point(750, 250),
         items: [
-          { name: 'CategoryID', iskey: true, figure: 'Decision', color: 'purple' },
-          { name: 'CategoryName', iskey: false, figure: 'Hexagon', color: 'blue' },
-          { name: 'Description', iskey: false, figure: 'Hexagon', color: 'blue' },
-          { name: 'Icon', iskey: false, figure: 'TriangleUp', color: 'red' }
-        ],
-        inheritedItems: [{ name: 'SupplierID', iskey: false, figure: 'Decision', color: 'purple' }]
-      },
+          {name: 'IEP?', isKey: false}, 
+          {name: 'Learning Disability?', isKey: false},
+          {name: 'Testing Anxiety?', isKey: false},
+          {name: 'Held Back?', isKey: false},
+          {name: 'Behavioral Diagnosis?', isKey: false},
+          {name: 'Traumatic Events?', isKey: false}, 
+          {name: 'Harmful Behavior?', isKey: false},
+          {name: 'Running Away?', isKey: false}, 
+          {name: 'Healthy Peer Relationship?', isKey: false}, 
+          {name: 'Healthy Adult Relationship?', isKey: false},
+          {name: 'Support System?', isKey: false}, 
+          {name: 'Safe at School?', isKey: false},
+          {name: 'Additional Notes', isKey: false}
+        ]
+      }, 
       {
-        key: 'Order Details',
-        location: new go.Point(600, 350),
+        key: 'School Visit', 
+        location: new go.Point(500, 250), 
         items: [
-          { name: 'OrderID', iskey: true, figure: 'Decision', color: 'purple' },
-          { name: 'UnitPrice', iskey: false, figure: 'Circle', color: 'green' },
-          { name: 'Quantity', iskey: false, figure: 'Circle', color: 'green' },
-          { name: 'Discount', iskey: false, figure: 'Circle', color: 'green' }
-        ],
-        inheritedItems: [{ name: 'ProductID', iskey: false, figure: 'Decision', color: 'purple' }]
+          {name: 'Date', isKey: false}, 
+          {name: 'Location', isKey: false}, 
+          {name: 'Attendees', isKey: false}, 
+          {name: 'Attendance Rate', isKey: false},
+          {name: 'Barriers to Student Success', isKey: false}, 
+          {name: 'Successful Classes', isKey: false}, 
+          {name: 'Classes in Need of Assistance', isKey: false}, 
+          {name: 'Critical Incidences', isKey: false}, 
+          {name: 'Additional Note', isKey: false}
+
+        ]
+      }, 
+      {
+        key: 'Community Profile', 
+        location: new go.Point(350, 600), 
+        items: [
+          {name: 'What problem(s) do you hope to solve?', isKey: false},
+          {name: 'What are your favorite things about your community?', isKey: false}, 
+          {name: 'What is missing in your community', isKey: false}, 
+          {name: 'Safe in your community?', isKey: false}
+        ]
       }
+
+
     ];
+
     const linkDataArray = [
-      { from: 'Products', to: 'Suppliers', text: '0..N', toText: '1' },
-      { from: 'Products', to: 'Categories', text: '0..N', toText: '1' },
-      { from: 'Order Details', to: 'Products', text: '0..N', toText: '1' },
-      { from: 'Categories', to: 'Suppliers', text: '0..N', toText: '1' }
+      // { from: 'Products', to: 'Suppliers', text: '0..N', toText: '1' },
+      // { from: 'Products', to: 'Categories', text: '0..N', toText: '1' },
+      // { from: 'Order Details', to: 'Products', text: '0..N', toText: '1' },
+      // { from: 'Categories', to: 'Suppliers', text: '0..N', toText: '1' }
     ];
+
+
     myDiagram.model = new go.GraphLinksModel({
       copiesArrays: true,
       copiesArrayObjects: true,
