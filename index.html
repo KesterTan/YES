@@ -1,47 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <body>
+
+<head>
     <script src="https://cdn.jsdelivr.net/npm/gojs@3.0.19/release/go.js"></script>
+</head>
+
+<body>
     <p>
-      This is a minimalist HTML and JavaScript skeleton of the GoJS Sample
-      <a href="https://gojs.net/latest/samples/entityRelationship.html"
-        >entityRelationship.html</a
+        This is a minimalist HTML and JavaScript skeleton of the GoJS Sample
+        <a href="https://gojs.net/latest/samples/entityRelationship.html">entityRelationship.html</a
       >. It was automatically generated from a button on the sample page, and
       does not contain the full HTML. It is intended as a starting point to
-      adapt for your own usage. For many samples, you may need to inspect the
-      <a
-        href="https://github.com/NorthwoodsSoftware/GoJS/blob/master/samples/entityRelationship.html"
-        >full source on Github</a
-      >
-      and copy other files or scripts.
+      adapt for your own usage.
     </p>
+
     <div id="allSampleContent" class="p-4 w-full">
       <script src="https://cdn.jsdelivr.net/npm/create-gojs-kit@3.0.19/dist/extensions/Figures.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/create-gojs-kit@3.0.19/dist/extensions/Themes.js"></script>
+
       <script id="code">
         function init() {
+          // Create the Diagram
           myDiagram = new go.Diagram("myDiagramDiv", {
             allowDelete: false,
             allowCopy: false,
+            // 1) ForceDirectedLayout with adjustments to space out the tables
             layout: new go.ForceDirectedLayout({
-              isInitial: false,
+              isInitial: true,              // automatically perform initial layout
+              defaultSpringLength: 250,     // larger spring length = more spacing
+              defaultElectricalCharge: 200, // higher charge = nodes repel more
             }),
             "undoManager.isEnabled": true,
-            // use "Modern" themes from extensions/Themes
             "themeManager.themeMap": new go.Map([
-              {
-                key: "light",
-                value: Modern,
-              },
-              {
-                key: "dark",
-                value: ModernDark,
-              },
+              { key: "light", value: Modern },
+              { key: "dark", value: ModernDark },
             ]),
             "themeManager.changesDivBackground": true,
             "themeManager.currentTheme": document.getElementById("theme").value,
           });
 
+          // Optionally tweak the color sets for the theme
           myDiagram.themeManager.set("light", {
             colors: {
               primary: "#f7f9fc",
@@ -62,71 +60,58 @@
           });
 
           // the template for each attribute in a node's array of item data
-          const itemTempl = new go.Panel("Horizontal", {
-            margin: new go.Margin(2, 0),
-          }).add(
-            new go.Shape({
-              desiredSize: new go.Size(15, 15),
-              strokeWidth: 0,
-              margin: new go.Margin(0, 5, 0, 0),
-            })
-              .bind("figure")
-              .themeData("fill", "color"),
-            new go.TextBlock({
-              font: "14px sans-serif",
-              stroke: "black",
-            })
-              .bind("text", "name")
-              .bind("font", "iskey", (k) =>
-                k ? "italic 14px sans-serif" : "14px sans-serif"
-              )
-              .theme("stroke", "text")
-          );
+          const itemTempl = new go.Panel("Horizontal", { margin: new go.Margin(2, 0) })
+            .add(
+              new go.Shape({
+                desiredSize: new go.Size(15, 15),
+                strokeWidth: 0,
+                margin: new go.Margin(0, 5, 0, 0),
+              })
+                .bind("figure")
+                .themeData("fill", "color"),
+              new go.TextBlock({
+                font: "14px sans-serif",
+              })
+                .bind("text", "name")
+                .bind("font", "iskey", (k) => k ? "italic 14px sans-serif" : "14px sans-serif")
+                .theme("stroke", "text")
+            );
 
-          // define the Node template, representing an entity
-          myDiagram.nodeTemplate = new go.Node("Auto", {
-            // the whole node panel
-            selectionAdorned: true,
-            resizable: true,
-            layoutConditions:
-              go.LayoutConditions.Standard & ~go.LayoutConditions.NodeSized,
-            fromSpot: go.Spot.LeftRightSides,
-            toSpot: go.Spot.LeftRightSides,
-          })
+          // define the Node template
+          myDiagram.nodeTemplate =
+            new go.Node("Auto",
+              {
+                selectionAdorned: true,
+                resizable: true,
+                layoutConditions: go.LayoutConditions.Standard & ~go.LayoutConditions.NodeSized,
+                fromSpot: go.Spot.LeftRightSides,
+                toSpot: go.Spot.LeftRightSides
+              }
+            )
             .bindTwoWay("location")
-            // whenever the PanelExpanderButton changes the visible property of the "LIST" panel,
-            // clear out any desiredSize set by the ResizingTool.
-            .bindObject(
-              "desiredSize",
-              "visible",
+            .bindObject("desiredSize", "visible",
               (v) => new go.Size(NaN, NaN),
               undefined,
               "LIST"
             )
             .add(
-              // define the node's outer shape, which will surround the Table
               new go.Shape("RoundedRectangle", {
                 stroke: "#e8f1ff",
                 strokeWidth: 3,
               }).theme("fill", "primary"),
-              new go.Panel("Table", {
-                margin: 8,
-                stretch: go.Stretch.Fill,
-              })
-                .addRowDefinition(0, {
-                  sizing: go.Sizing.None,
-                })
+              new go.Panel("Table", { margin: 8, stretch: go.Stretch.Fill })
+                .addRowDefinition(0, { sizing: go.Sizing.None })
                 .add(
-                  // the table header
+                  // table header
                   new go.TextBlock({
                     row: 0,
                     alignment: go.Spot.Center,
-                    margin: new go.Margin(0, 24, 0, 2), // leave room for Button
+                    margin: new go.Margin(0, 24, 0, 2),
                     font: "bold 18px sans-serif",
                   })
                     .bind("text", "key")
                     .theme("stroke", "text"),
-                  // the collapse/expand button
+                  // collapse/expand button
                   go.GraphObject.build(
                     "PanelExpanderButton",
                     {
@@ -134,109 +119,93 @@
                       alignment: go.Spot.TopRight,
                     },
                     "LIST"
-                  ) // the name of the element whose visibility this button toggles
-                    .theme("ButtonIcon.stroke", "text"),
-                  new go.Panel("Table", {
-                    name: "LIST",
-                    row: 1,
-                    alignment: go.Spot.TopLeft,
-                  }).add(
-                    new go.TextBlock("Attributes", {
-                      row: 0,
-                      alignment: go.Spot.Left,
-                      margin: new go.Margin(3, 24, 3, 2),
-                      font: "bold 15px sans-serif",
-                    }).theme("stroke", "text"),
-                    go.GraphObject.build(
-                      "PanelExpanderButton",
-                      {
+                  ).theme("ButtonIcon.stroke", "text"),
+                  new go.Panel("Table", { name: "LIST", row: 1, alignment: go.Spot.TopLeft })
+                    .add(
+                      new go.TextBlock("Attributes", {
                         row: 0,
-                        alignment: go.Spot.Right,
-                      },
-                      "NonInherited"
-                    ).theme("ButtonIcon.stroke", "text"),
-                    new go.Panel("Vertical", {
-                      row: 1,
-                      name: "NonInherited",
-                      alignment: go.Spot.TopLeft,
-                      defaultAlignment: go.Spot.Left,
-                      itemTemplate: itemTempl,
-                    }).bind("itemArray", "items"),
-                    new go.TextBlock("Inherited Attributes", {
-                      row: 2,
-                      alignment: go.Spot.Left,
-                      margin: new go.Margin(3, 24, 3, 2), // leave room for Button
-                      font: "bold 15px sans-serif",
-                    })
-                      .bind(
-                        "visible",
-                        "inheritedItems",
-                        (arr) => Array.isArray(arr) && arr.length > 0
-                      )
-                      .theme("stroke", "text"),
-                    go.GraphObject.build(
-                      "PanelExpanderButton",
-                      {
+                        alignment: go.Spot.Left,
+                        margin: new go.Margin(3, 24, 3, 2),
+                        font: "bold 15px sans-serif",
+                      }).theme("stroke", "text"),
+                      go.GraphObject.build(
+                        "PanelExpanderButton",
+                        {
+                          row: 0,
+                          alignment: go.Spot.Right,
+                        },
+                        "NonInherited"
+                      ).theme("ButtonIcon.stroke", "text"),
+                      new go.Panel("Vertical", {
+                        row: 1,
+                        name: "NonInherited",
+                        alignment: go.Spot.TopLeft,
+                        defaultAlignment: go.Spot.Left,
+                        itemTemplate: itemTempl,
+                      }).bind("itemArray", "items"),
+                      new go.TextBlock("Inherited Attributes", {
                         row: 2,
-                        alignment: go.Spot.Right,
-                      },
-                      "Inherited"
-                    )
-                      .bind(
-                        "visible",
-                        "inheritedItems",
-                        (arr) => Array.isArray(arr) && arr.length > 0
+                        alignment: go.Spot.Left,
+                        margin: new go.Margin(3, 24, 3, 2),
+                        font: "bold 15px sans-serif",
+                      })
+                        .bind("visible", "inheritedItems", (arr) => Array.isArray(arr) && arr.length > 0)
+                        .theme("stroke", "text"),
+                      go.GraphObject.build(
+                        "PanelExpanderButton",
+                        {
+                          row: 2,
+                          alignment: go.Spot.Right,
+                        },
+                        "Inherited"
                       )
-                      .theme("ButtonIcon.stroke", "text"),
-                    new go.Panel("Vertical", {
-                      row: 3,
-                      name: "Inherited",
-                      alignment: go.Spot.TopLeft,
-                      defaultAlignment: go.Spot.Left,
-                      itemTemplate: itemTempl,
-                    }).bind("itemArray", "inheritedItems")
-                  )
+                        .bind("visible", "inheritedItems", (arr) => Array.isArray(arr) && arr.length > 0)
+                        .theme("ButtonIcon.stroke", "text"),
+                      new go.Panel("Vertical", {
+                        row: 3,
+                        name: "Inherited",
+                        alignment: go.Spot.TopLeft,
+                        defaultAlignment: go.Spot.Left,
+                        itemTemplate: itemTempl,
+                      }).bind("itemArray", "inheritedItems")
+                    )
                 )
             );
 
-          // define the Link template, representing a relationship
-          myDiagram.linkTemplate = new go.Link({
-            // the whole link panel
-            selectionAdorned: true,
-            layerName: "Background",
-            reshapable: true,
-            routing: go.Routing.AvoidsNodes,
-            corner: 5,
-            curve: go.Curve.JumpOver,
-          }).add(
-            new go.Shape({
-              // the link shape
-              stroke: "#f7f9fc",
-              strokeWidth: 3,
-            }).theme("stroke", "link"),
-            new go.TextBlock({
-              // the "from" label
-              textAlign: "center",
-              font: "bold 14px sans-serif",
-              stroke: "black",
-              segmentIndex: 0,
-              segmentOffset: new go.Point(NaN, NaN),
-              segmentOrientation: go.Orientation.Upright,
+          // define the Link template
+          myDiagram.linkTemplate =
+            new go.Link({
+              selectionAdorned: true,
+              layerName: "Background",
+              reshapable: true,
+              routing: go.Routing.AvoidsNodes,
+              corner: 5,
+              curve: go.Curve.JumpOver
             })
-              .bind("text")
-              .theme("stroke", "text"),
-            new go.TextBlock({
-              // the "to" label
-              textAlign: "center",
-              font: "bold 14px sans-serif",
-              stroke: "black",
-              segmentIndex: -1,
-              segmentOffset: new go.Point(NaN, NaN),
-              segmentOrientation: go.Orientation.Upright,
-            })
-              .bind("text", "toText")
-              .theme("stroke", "text")
-          );
+            .add(
+              new go.Shape({
+                stroke: "#f7f9fc",
+                strokeWidth: 3,
+              }).theme("stroke", "link"),
+              new go.TextBlock({
+                textAlign: "center",
+                font: "bold 14px sans-serif",
+                segmentIndex: 0,
+                segmentOffset: new go.Point(NaN, NaN),
+                segmentOrientation: go.Orientation.Upright,
+              })
+                .bind("text")
+                .theme("stroke", "text"),
+              new go.TextBlock({
+                textAlign: "center",
+                font: "bold 14px sans-serif",
+                segmentIndex: -1,
+                segmentOffset: new go.Point(NaN, NaN),
+                segmentOrientation: go.Orientation.Upright,
+              })
+                .bind("text", "toText")
+                .theme("stroke", "text")
+            );
 
           // create the model for the E-R diagram
           const nodeDataArray = [
@@ -511,126 +480,95 @@
                 },
               ],
             },
-
             {
-              key: "Suppliers",
-              location: new go.Point(500, 0),
+              key: 'Awards',
+              location: new go.Point(250, 250),
               items: [
-                {
-                  name: "SupplierID",
-                  iskey: true,
-                  figure: "Decision",
-                  color: "purple",
-                },
-                {
-                  name: "CompanyName",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "ContactName",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "Address",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "ShippingDistance",
-                  iskey: false,
-                  figure: "Circle",
-                  color: "green",
-                },
-                {
-                  name: "Logo",
-                  iskey: false,
-                  figure: "TriangleUp",
-                  color: "red",
-                },
-              ],
-              inheritedItems: [],
+                {name: 'Award Name', isKey: true, figure: 'Decision', color: 'purple'}
+              ], 
+              // inheritedItems: [{ }]
             },
             {
-              key: "Categories",
-              location: new go.Point(0, 30),
+              key: 'Home Profile',
+              location: new go.Point(1000, 250),
               items: [
-                {
-                  name: "CategoryID",
-                  iskey: true,
-                  figure: "Decision",
-                  color: "purple",
-                },
-                {
-                  name: "CategoryName",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "Description",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "Icon",
-                  iskey: false,
-                  figure: "TriangleUp",
-                  color: "red",
-                },
-              ],
-              inheritedItems: [
-                {
-                  name: "SupplierID",
-                  iskey: false,
-                  figure: "Decision",
-                  color: "purple",
-                },
-              ],
+                {name: 'How often do you hang out with your family?', isKey: false}, 
+                {name: 'How often are you in your room when you are at home?', isKey: false},
+                {name: 'How often do you get into arguments with others in your home?', isKey: false},
+                {name: 'How many siblings do you have?', isKey: false},
+                {name: 'Do you live in a home, apartment, or townhome?', isKey: false},
+                {name: 'Do you have your own room?', isKey: false},
+                {name: 'How many adults live in your house?', isKey: false},
+                {name: 'What are your interactions like with other adults in your house?', isKey: false}, 
+                {name: 'How often do you have contact with adults in your house?', isKey: false},
+                {name: 'Who is Working', isKey: false},
+                {name: 'Supportive Adults at Home?', isKey: false},
+                {name: 'Any new or transient adults in house?', isKey: false}, 
+                {name: 'Additional Note:', isKey: false}
+              ]
             },
             {
-              key: "Order Details",
-              location: new go.Point(600, 350),
+              key: 'Home Visit', 
+              location: new go.Point(850, 600),
               items: [
-                {
-                  name: "OrderID",
-                  iskey: true,
-                  figure: "Decision",
-                  color: "purple",
-                },
-                {
-                  name: "UnitPrice",
-                  iskey: false,
-                  figure: "Circle",
-                  color: "green",
-                },
-                {
-                  name: "Quantity",
-                  iskey: false,
-                  figure: "Circle",
-                  color: "green",
-                },
-                {
-                  name: "Discount",
-                  iskey: false,
-                  figure: "Circle",
-                  color: "green",
-                },
-              ],
-              inheritedItems: [
-                {
-                  name: "ProductID",
-                  iskey: false,
-                  figure: "Decision",
-                  color: "purple",
-                },
-              ],
+                {name: 'Date', isKye: false},
+                {name: 'Location', isKey: false}, 
+                {name: 'Attendees', isKey: false}, 
+                {name: 'Structural Safety', isKey: false}, 
+                {name: 'Resident Updates', isKey: false},
+                {name: 'Food Security', isKey: false}, 
+                {name: 'Curfew Compliance', isKey: false},
+                {name: 'Critical Incidences', isKey: false}, 
+                {name: 'Additional Notes', isKey: false}
+              ]
+      
             },
+            {
+              key: 'School Profile',
+              location: new go.Point(750, 250),
+              items: [
+                {name: 'IEP?', isKey: false}, 
+                {name: 'Learning Disability?', isKey: false},
+                {name: 'Testing Anxiety?', isKey: false},
+                {name: 'Held Back?', isKey: false},
+                {name: 'Behavioral Diagnosis?', isKey: false},
+                {name: 'Traumatic Events?', isKey: false}, 
+                {name: 'Harmful Behavior?', isKey: false},
+                {name: 'Running Away?', isKey: false}, 
+                {name: 'Healthy Peer Relationship?', isKey: false}, 
+                {name: 'Healthy Adult Relationship?', isKey: false},
+                {name: 'Support System?', isKey: false}, 
+                {name: 'Safe at School?', isKey: false},
+                {name: 'Additional Notes', isKey: false}
+              ]
+            }, 
+            {
+              key: 'School Visit', 
+              location: new go.Point(500, 250), 
+              items: [
+                {name: 'Date', isKey: false}, 
+                {name: 'Location', isKey: false}, 
+                {name: 'Attendees', isKey: false}, 
+                {name: 'Attendance Rate', isKey: false},
+                {name: 'Barriers to Student Success', isKey: false}, 
+                {name: 'Successful Classes', isKey: false}, 
+                {name: 'Classes in Need of Assistance', isKey: false}, 
+                {name: 'Critical Incidences', isKey: false}, 
+                {name: 'Additional Note', isKey: false}
+      
+              ]
+            }, 
+            {
+              key: 'Community Profile', 
+              location: new go.Point(350, 600), 
+              items: [
+                {name: 'What problem(s) do you hope to solve?', isKey: false},
+                {name: 'What are your favorite things about your community?', isKey: false}, 
+                {name: 'What is missing in your community', isKey: false}, 
+                {name: 'Safe in your community?', isKey: false}
+              ]
+            }
+      
           ];
           const linkDataArray = [
             {
@@ -658,53 +596,41 @@
                 toText: "1",
             },
             {
-                from: "Products",
-                to: "Suppliers",
-                text: "0..N",
-                toText: "1",
-            },
-            {
-                from: "Products",
-                to: "Categories",
-                text: "0..N",
-                toText: "1",
-            },
-            {
-                from: "Order Details",
-                to: "Products",
-                text: "0..N",
-                toText: "1",
-            },
-            {
-                from: "Categories",
-                to: "Suppliers",
-                text: "0..N",
-                toText: "1",
-            },
-            {
-              from: "Products",
-              to: "Suppliers",
+              from: "Students",
+              to: "Awards",
               text: "0..N",
               toText: "1",
             },
             {
-              from: "Products",
-              to: "Categories",
+                from: "Students",
+                to: "School Profile",
+                text: "0..N",
+                toText: "1",
+            },
+            {
+              from: "School Profile",
+              to: "School Visit",
               text: "0..N",
               toText: "1",
             },
             {
-              from: "Order Details",
-              to: "Products",
+              from: "Students",
+              to: "Community Profile",
               text: "0..N",
               toText: "1",
             },
             {
-              from: "Categories",
-              to: "Suppliers",
+              from: "Students",
+              to: "Home Profile",
               text: "0..N",
               toText: "1",
             },
+            {
+              from: "Home Profile",
+              to: "Home Visit",
+              text: "0..N",
+              toText: "1",
+            }
           ];
           myDiagram.model = new go.GraphLinksModel({
             copiesArrays: true,
@@ -745,10 +671,8 @@
           Sample for representing the relationship between various entities. Try
           dragging the nodes -- their links will avoid other nodes, by virtue of
           the
-          <a>Routing.AvoidsNodes</a> property assigned to the custom link
-          template's <a>Link.routing</a>. Also note the use of
-          <a href="../intro/buttons.html" target="_blank"
-            >Panel Expander Buttons</a
+          <a>Routing.AvoidsNodes</a> property assigned to the custom link template's <a>Link.routing</a>. Also note the use of
+        <a href="../intro/buttons.html" target="_blank">Panel Expander Buttons</a
           >
           to allow for expandable/collapsible node data.
         </p>
@@ -762,8 +686,9 @@
         <p>
           The dark and light themes are controlled using the
           <a>ThemeManager</a>.
-        </p>
-      </div>
+    </p>
     </div>
-  </body>
+    </div>
+</body>
+
 </html>
