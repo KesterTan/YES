@@ -27,8 +27,8 @@
             // 1) ForceDirectedLayout with adjustments to space out the tables
             layout: new go.ForceDirectedLayout({
               isInitial: true,              // automatically perform initial layout
-              defaultSpringLength: 250,     // larger spring length = more spacing
-              defaultElectricalCharge: 200, // higher charge = nodes repel more
+              defaultSpringLength: 1000,     // larger spring length = more spacing
+              defaultElectricalCharge: 1000, // higher charge = nodes repel more
             }),
             "undoManager.isEnabled": true,
             "themeManager.themeMap": new go.Map([
@@ -211,7 +211,7 @@
           const nodeDataArray = [
             {
               key: "Students",
-              location: new go.Point(250, 250),
+              location: new go.Point(100, 100),
               items: [
                 {
                   name: "Full Name",
@@ -368,7 +368,7 @@
             },
             {
               key: "Programs",
-              location: new go.Point(100, 50),
+              location: new go.Point(300, 300),
               items: [
                 {
                   name: "Program_ID",
@@ -386,7 +386,7 @@
             },
             {
               key: "Student_Program_Enrollment",
-              location: new go.Point(150, 200), // Adjust positioning
+              location: new go.Point(10, 10), // Adjust positioning
               items: [
                 {
                   name: "Enrollment_ID",
@@ -514,7 +514,7 @@
             },
             {
               key: 'Home Profile',
-              location: new go.Point(1000, 250),
+              location: new go.Point(1000, 1000),
               items: [
                 {name: 'How often do you hang out with your family?', isKey: false}, 
                 {name: 'How often are you in your room when you are at home?', isKey: false},
@@ -533,7 +533,7 @@
             },
             {
               key: 'Home Visit', 
-              location: new go.Point(850, 600),
+              location: new go.Point(1000, 1200),
               items: [
                 {name: 'Date', isKye: false},
                 {name: 'Location', isKey: false}, 
@@ -549,7 +549,7 @@
             },
             {
               key: 'School Profile',
-              location: new go.Point(750, 250),
+              location: new go.Point(10, 10),
               items: [
                 {name: 'IEP?', isKey: false}, 
                 {name: 'Learning Disability?', isKey: false},
@@ -568,7 +568,7 @@
             }, 
             {
               key: 'School Visit', 
-              location: new go.Point(500, 250), 
+              location: new go.Point(10, 3), 
               items: [
                 {name: 'Date', isKey: false}, 
                 {name: 'Location', isKey: false}, 
@@ -584,15 +584,153 @@
             }, 
             {
               key: 'Community Profile', 
-              location: new go.Point(350, 600), 
+              location: new go.Point(500, 500), 
               items: [
                 {name: 'What problem(s) do you hope to solve?', isKey: false},
                 {name: 'What are your favorite things about your community?', isKey: false}, 
                 {name: 'What is missing in your community', isKey: false}, 
                 {name: 'Safe in your community?', isKey: false}
               ]
+            },
+            {
+              key: "Court Appearances", 
+              location: new go.Point(900, 500),
+              items: [
+                {name: "Date", isKey: false}, 
+                {name: "Location", isKey: false},
+                {name: "Officer/Judge"}, 
+                {name: "Attendees"}, 
+                {name: "Notes"}, 
+                {name: "Disposition(s)"}, 
+                {name: "Next Scheduled Hearing (if applicable)"}
+              ]
+            },
+            {
+              key: "Clients",
+              location: new go.Point(1000, 1000),
+              items: [
+              {
+                name: "Last Name",
+                iskey: true,
+                figure: "Rectangle",
+                color: "red",
+              },
+              {
+                name: "First Name",
+                iskey: false,
+                figure: "Rectangle",
+                color: "red",
+              },
+              {
+                name: "Program Status",
+                iskey: false,
+                figure: "Hexagon",
+                color: "blue",
+              },
+              {
+                name: "Level of Service",
+                iskey: false,
+                figure: "Hexagon",
+                color: "blue",
+              },
+              {
+                name: "Intervention Specialist",
+                iskey: false,
+                figure: "Circle",
+                color: "green",
+              },
+              {
+                name: "Call Type",
+                iskey: false,
+                figure: "Circle",
+                color: "green",
+              },
+              {
+                name: "MP Program Involvement?",
+                iskey: false,
+                figure: "Decision",
+                color: "purple",
+              },
+              {
+                name: "Client Notes",
+                iskey: false,
+                figure: "Rectangle",
+                color: "red",
+              }
+              ]
+            },
+            {
+              key: "Service Provision", 
+              location: new go.Point(1000, 600),
+              items: [
+                {name: "School Goal"},
+                {name: "School Intervention Category"}, 
+                {name: "School Intervention Description"},
+                {name: "School Frequency Intervention Staff"}, 
+                {name: "School Frequency Intervention Student"}, 
+                {name: "School Developed Skills"},
+                {name: "School Developed Status"},
+                {name: "Community Outcome"}, 
+                {name: "Community Goal"}, 
+                {name: "Community Intervention Category"},
+                {name: "Community Intervention Description"}, 
+                {name: "Community Frequency Intervention Staff"}, 
+                {name: "Community Frequency Intervention Student"},
+                {name: "Community Developed Skills"}, 
+                {name: "Community Developed Status"}, 
+                {name: "Community Outcome"},
+                {name: "Personal Goal"}, 
+                {name: "Personal Intervention Category"}, 
+                {name: "Personal Intervention Description"}, 
+                {name: "Personal Frequency Intervention Staff"}, 
+                {name: "Personal Frequency Intervention Student"}, 
+                {name: "Personal Developed Skills"}, 
+                {name: "Personal Developed Status"}, 
+                {name: "Personal Outcome"}
+              ]
+            },
+            {
+              key: "Medical",
+              location: new go.Point(1000, 800),
+              items: [
+              {
+                name: "Medical Concerns",
+                iskey: false,
+                figure: "Hexagon",
+                color: "blue",
+              },
+              {
+                name: "Medical Concerns",
+                iskey: false,
+                figure: "Hexagon",
+                color: "blue",
+              },
+              {
+                name: "Medical Concerns",
+                iskey: false,
+                figure: "Hexagon",
+                color: "blue",
+              },
+              {
+                name: "Medications",
+                iskey: false,
+                figure: "Circle",
+                color: "green",
+              },
+              {
+                name: "Permission to Transport?",
+                iskey: false,
+                figure: "Decision",
+                color: "purple",
+              },
+              {
+                name: "Notes",
+                iskey: false,
+                figure: "Rectangle",
+                color: "red",
+              }
+              ]
             }
-      
           ];
           const linkDataArray = [
             {
@@ -652,6 +790,36 @@
             {
               from: "Home Profile",
               to: "Home Visit",
+              text: "0..N",
+              toText: "1",
+            },
+            {
+              from: "Students",
+              to: "People",
+              text: "0..N",
+              toText: "1",
+            },
+            {
+              from: "Students",
+              to: "Court Appearances",
+              text: "0..N",
+              toText: "1",
+            },
+            {
+              from: "People",
+              to: "Clients",
+              text: "0..N",
+              toText: "1",
+            },
+            {
+              from: "Students",
+              to: "Medical",
+              text: "0..N",
+              toText: "1",
+            },
+            {
+              from: "Students",
+              to: "Service Provision",
               text: "0..N",
               toText: "1",
             }
