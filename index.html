@@ -764,7 +764,7 @@
                         color: "blue",
                     }]
                 }, {
-                    key: "Clients",
+                    key: "Client",
                     location: new go.Point(1000, 1000),
                     items: [{
                         name: "Last Name",
@@ -983,7 +983,7 @@
                 const linkDataArray = [{
                     from: "Student_Program_Enrollment",
                     to: "Students",
-                    text: "0..N",
+                    text: "1",
                     toText: "1", // many enrollments belong to 1 student
                 }, {
                     from: "Student_Program_Enrollment",
@@ -996,70 +996,65 @@
                     text: "0..N",
                     toText: "1", // many courses belong to 1 program
                 }, {
-                    from: "Order Details",
-                    to: "Products",
-                    text: "0..N",
-                    toText: "1",
-                }, {
                     from: "Students",
                     to: "Awards",
                     text: "0..N",
-                    toText: "1",
+                    toText: "0..N",
                 }, {
                     from: "Students",
                     to: "School Profile",
-                    text: "0..N",
-                    toText: "1",
+                    text: "1",
+                    toText: "0..N",
                 }, {
                     from: "School Profile",
                     to: "School Visit",
-                    text: "0..N",
-                    toText: "1",
+                    text: "1",
+                    toText: "0..N",
                 }, {
                     from: "Students",
                     to: "Community Profile",
-                    text: "0..N",
-                    toText: "1",
+                    text: "1",
+                    toText: "0..N",
                 }, {
                     from: "Students",
                     to: "Home Profile",
-                    text: "0..N",
-                    toText: "1",
+                    text: "1",
+                    toText: "0..N",
                 }, {
                     from: "Home Profile",
                     to: "Home Visit",
-                    text: "0..N",
-                    toText: "1",
+                    text: "1",
+                    toText: "0..N",
                 }, {
                     from: "Students",
                     to: "People",
                     text: "0..N",
-                    toText: "1",
+                    toText: "0..N",
                 }, {
                     from: "Students",
                     to: "Court Appearances",
-                    text: "0..N",
-                    toText: "1",
+                    text: "1",
+                    toText: "0..N",
                 }, {
                     from: "People",
-                    to: "Clients",
-                    text: "0..N",
+                    to: "Client",
+                    text: "1",
                     toText: "1",
                 }, {
                     from: "Students",
                     to: "Medical",
-                    text: "0..N",
-                    toText: "1",
+                    text: "1",
+                    toText: "0..N",
                 }, {
                     from: "Students",
                     to: "Service Provision",
-                    text: "0..N",
-                    toText: "1",
+                    text: "1",
+                    toText: "0..N",
                 }, {
                     from: "Students",
                     to: "Outing",
                     text: "0..N",
-                    toText: "1",
+                    toText: "0..N",
                 }, {
                     from: "Outing",
                     to: "Programs",
