@@ -15,6 +15,7 @@
         <li>Blue Hexagon: String</li>
         <li>Green Circle: Number</li>
         <li>Yellow Circle: Date</li>
+        <li>Orange Hexagon: Boolean</li>
     </ul>
 
     <div id="allSampleContent" class="p-4 w-full">
@@ -53,6 +54,8 @@
                         blue: "#3999bf",
                         purple: "#7f36b0",
                         red: "#c41000",
+                        orange: "#ff9c3d",
+                        yellow: "#ffea3d",
                     },
                 });
                 myDiagram.themeManager.set("dark", {
@@ -62,6 +65,8 @@
                         blue: "#3f9fc6",
                         purple: "#9951c9",
                         red: "#ff4d3d",
+                        orange: "#ff9c3d",
+                        yellow: "#ffea3d",
                     },
                 });
 
@@ -221,7 +226,7 @@
 
                 // create the model for the E-R diagram
                 const nodeDataArray = [{
-                    key: "Students",
+                    key: "Student",
                     location: new go.Point(100, 100),
                     items: [{
                         name: "Full Name",
@@ -348,10 +353,45 @@
                         iskey: false,
                         figure: "Hexagon",
                         color: "blue",
-                    }, ],
+                    }, {
+                        name: "Program Status",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Level of Service",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Intervention Specialist",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Call Type",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "MP Program Involvement?",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Client Notes",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Divergent",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "orange"
+                    }],
                     inheritedItems: [],
                 }, {
-                    key: "Programs",
+                    key: "Program",
                     location: new go.Point(300, 300),
                     items: [{
                         name: "Program_ID",
@@ -363,7 +403,7 @@
                         iskey: false,
                         figure: "Hexagon",
                         color: "blue",
-                    }, ],
+                    }],
                 }, {
                     key: "Student_Program_Enrollment",
                     location: new go.Point(10, 10), // Adjust positioning
@@ -397,7 +437,7 @@
                         }, // Active, Completed, Dropped
                     ],
                 }, {
-                    key: "Courses",
+                    key: "Course",
                     location: new go.Point(200, 200),
                     items: [{
                         name: "Course_ID",
@@ -446,7 +486,7 @@
                         color: "blue",
                     }, ],
                 }, {
-                    key: 'Awards',
+                    key: 'Award',
                     location: new go.Point(250, 250),
                     items: [{
                         name: 'Award Name',
@@ -732,7 +772,7 @@
                         color: "blue",
                     }]
                 }, {
-                    key: "Court Appearances",
+                    key: "Court Appearance",
                     location: new go.Point(900, 500),
                     items: [{
                         name: "Date",
@@ -766,50 +806,6 @@
                         color: "blue",
                     }, {
                         name: "Next Scheduled Hearing (if applicable)",
-                        isKey: false,
-                        figure: "Hexagon",
-                        color: "blue",
-                    }]
-                }, {
-                    key: "Client",
-                    location: new go.Point(1000, 1000),
-                    items: [{
-                        name: "Last Name",
-                        isKey: false,
-                        figure: "Hexagon",
-                        color: "blue",
-                    }, {
-                        name: "First Name",
-                        isKey: false,
-                        figure: "Hexagon",
-                        color: "blue",
-                    }, {
-                        name: "Program Status",
-                        iskey: false,
-                        figure: "Hexagon",
-                        color: "blue",
-                    }, {
-                        name: "Level of Service",
-                        iskey: false,
-                        figure: "Hexagon",
-                        color: "blue",
-                    }, {
-                        name: "Intervention Specialist",
-                        isKey: false,
-                        figure: "Hexagon",
-                        color: "blue",
-                    }, {
-                        name: "Call Type",
-                        isKey: false,
-                        figure: "Hexagon",
-                        color: "blue",
-                    }, {
-                        name: "MP Program Involvement?",
-                        isKey: false,
-                        figure: "Hexagon",
-                        color: "blue",
-                    }, {
-                        name: "Client Notes",
                         isKey: false,
                         figure: "Hexagon",
                         color: "blue",
@@ -981,7 +977,7 @@
                         figure: "Hexagon",
                         color: "blue",
                     }, {
-                        name: "Michigan Trip",
+                        name: "Location",
                         isKey: false,
                         figure: "Hexagon",
                         color: "blue",
@@ -989,26 +985,26 @@
                 }];
                 const linkDataArray = [{
                     from: "Student_Program_Enrollment",
-                    to: "Students",
+                    to: "Student",
                     text: "1",
-                    toText: "1", // many enrollments belong to 1 student
+                    toText: "1",
                 }, {
                     from: "Student_Program_Enrollment",
-                    to: "Programs",
+                    to: "Program",
                     text: "0..N",
-                    toText: "1", // many enrollments belong to 1 program
+                    toText: "1",
                 }, {
-                    from: "Courses",
-                    to: "Programs",
+                    from: "Course",
+                    to: "Program",
                     text: "0..N",
-                    toText: "1", // many courses belong to 1 program
+                    toText: "1",
                 }, {
-                    from: "Students",
-                    to: "Awards",
+                    from: "Student",
+                    to: "Award",
                     text: "0..N",
                     toText: "0..N",
                 }, {
-                    from: "Students",
+                    from: "Student",
                     to: "School Profile",
                     text: "1",
                     toText: "0..N",
@@ -1018,12 +1014,12 @@
                     text: "1",
                     toText: "0..N",
                 }, {
-                    from: "Students",
+                    from: "Student",
                     to: "Community Profile",
                     text: "1",
                     toText: "0..N",
                 }, {
-                    from: "Students",
+                    from: "Student",
                     to: "Home Profile",
                     text: "1",
                     toText: "0..N",
@@ -1033,13 +1029,13 @@
                     text: "1",
                     toText: "0..N",
                 }, {
-                    from: "Students",
+                    from: "Student",
                     to: "People",
                     text: "0..N",
                     toText: "0..N",
                 }, {
-                    from: "Students",
-                    to: "Court Appearances",
+                    from: "Student",
+                    to: "Court Appearance",
                     text: "1",
                     toText: "0..N",
                 }, {
@@ -1048,25 +1044,25 @@
                     text: "1",
                     toText: "1",
                 }, {
-                    from: "Students",
+                    from: "Student",
                     to: "Medical",
                     text: "1",
                     toText: "0..N",
                 }, {
-                    from: "Students",
+                    from: "Student",
                     to: "Service Provision",
                     text: "1",
                     toText: "0..N",
                 }, {
-                    from: "Students",
+                    from: "Student",
                     to: "Outing",
                     text: "0..N",
                     toText: "0..N",
                 }, {
                     from: "Outing",
-                    to: "Programs",
+                    to: "Program",
                     text: "0..N",
-                    toText: "1",
+                    toText: "0..N",
                 }];
                 myDiagram.model = new go.GraphLinksModel({
                     copiesArrays: true,
