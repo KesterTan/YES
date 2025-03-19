@@ -7,864 +7,1077 @@
 
 <body>
     <p>
-        This is a minimalist HTML and JavaScript skeleton of the GoJS Sample
-        <a href="https://gojs.net/latest/samples/entityRelationship.html">entityRelationship.html</a
-      >. It was automatically generated from a button on the sample page, and
-      does not contain the full HTML. It is intended as a starting point to
-      adapt for your own usage.
+        Youth Enrichment Services
     </p>
 
     <div id="allSampleContent" class="p-4 w-full">
-      <script src="https://cdn.jsdelivr.net/npm/create-gojs-kit@3.0.19/dist/extensions/Figures.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/create-gojs-kit@3.0.19/dist/extensions/Themes.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/create-gojs-kit@3.0.19/dist/extensions/Figures.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/create-gojs-kit@3.0.19/dist/extensions/Themes.js"></script>
 
-      <script id="code">
-        function init() {
-          // Create the Diagram
-          myDiagram = new go.Diagram("myDiagramDiv", {
-            allowDelete: false,
-            allowCopy: false,
-            // 1) ForceDirectedLayout with adjustments to space out the tables
-            layout: new go.ForceDirectedLayout({
-              isInitial: true,              // automatically perform initial layout
-              defaultSpringLength: 1000,     // larger spring length = more spacing
-              defaultElectricalCharge: 1000, // higher charge = nodes repel more
-            }),
-            "undoManager.isEnabled": true,
-            "themeManager.themeMap": new go.Map([
-              { key: "light", value: Modern },
-              { key: "dark", value: ModernDark },
-            ]),
-            "themeManager.changesDivBackground": true,
-            "themeManager.currentTheme": document.getElementById("theme").value,
-          });
+        <script id="code">
+            function init() {
+                // Create the Diagram
+                myDiagram = new go.Diagram("myDiagramDiv", {
+                    allowDelete: false,
+                    allowCopy: false,
+                    // 1) ForceDirectedLayout with adjustments to space out the tables
+                    layout: new go.ForceDirectedLayout({
+                        isInitial: true, // automatically perform initial layout
+                        defaultSpringLength: 1000, // larger spring length = more spacing
+                        defaultElectricalCharge: 1000, // higher charge = nodes repel more
+                    }),
+                    "undoManager.isEnabled": true,
+                    "themeManager.themeMap": new go.Map([{
+                        key: "light",
+                        value: Modern
+                    }, {
+                        key: "dark",
+                        value: ModernDark
+                    }, ]),
+                    "themeManager.changesDivBackground": true,
+                    "themeManager.currentTheme": document.getElementById("theme").value,
+                });
 
-          // Optionally tweak the color sets for the theme
-          myDiagram.themeManager.set("light", {
-            colors: {
-              primary: "#f7f9fc",
-              green: "#62bd8e",
-              blue: "#3999bf",
-              purple: "#7f36b0",
-              red: "#c41000",
-            },
-          });
-          myDiagram.themeManager.set("dark", {
-            colors: {
-              primary: "#4a4a4a",
-              green: "#429e6f",
-              blue: "#3f9fc6",
-              purple: "#9951c9",
-              red: "#ff4d3d",
-            },
-          });
-
-          // the template for each attribute in a node's array of item data
-          const itemTempl = new go.Panel("Horizontal", { margin: new go.Margin(2, 0) })
-            .add(
-              new go.Shape({
-                desiredSize: new go.Size(15, 15),
-                strokeWidth: 0,
-                margin: new go.Margin(0, 5, 0, 0),
-              })
-                .bind("figure")
-                .themeData("fill", "color"),
-              new go.TextBlock({
-                font: "14px sans-serif",
-              })
-                .bind("text", "name")
-                .bind("font", "iskey", (k) => k ? "italic 14px sans-serif" : "14px sans-serif")
-                .theme("stroke", "text")
-            );
-
-          // define the Node template
-          myDiagram.nodeTemplate =
-            new go.Node("Auto",
-              {
-                selectionAdorned: true,
-                resizable: true,
-                layoutConditions: go.LayoutConditions.Standard & ~go.LayoutConditions.NodeSized,
-                fromSpot: go.Spot.LeftRightSides,
-                toSpot: go.Spot.LeftRightSides
-              }
-            )
-            .bindTwoWay("location")
-            .bindObject("desiredSize", "visible",
-              (v) => new go.Size(NaN, NaN),
-              undefined,
-              "LIST"
-            )
-            .add(
-              new go.Shape("RoundedRectangle", {
-                stroke: "#e8f1ff",
-                strokeWidth: 3,
-              }).theme("fill", "primary"),
-              new go.Panel("Table", { margin: 8, stretch: go.Stretch.Fill })
-                .addRowDefinition(0, { sizing: go.Sizing.None })
-                .add(
-                  // table header
-                  new go.TextBlock({
-                    row: 0,
-                    alignment: go.Spot.Center,
-                    margin: new go.Margin(0, 24, 0, 2),
-                    font: "bold 18px sans-serif",
-                  })
-                    .bind("text", "key")
-                    .theme("stroke", "text"),
-                  // collapse/expand button
-                  go.GraphObject.build(
-                    "PanelExpanderButton",
-                    {
-                      row: 0,
-                      alignment: go.Spot.TopRight,
+                // Optionally tweak the color sets for the theme
+                myDiagram.themeManager.set("light", {
+                    colors: {
+                        primary: "#f7f9fc",
+                        green: "#62bd8e",
+                        blue: "#3999bf",
+                        purple: "#7f36b0",
+                        red: "#c41000",
                     },
-                    "LIST"
-                  ).theme("ButtonIcon.stroke", "text"),
-                  new go.Panel("Table", { name: "LIST", row: 1, alignment: go.Spot.TopLeft })
+                });
+                myDiagram.themeManager.set("dark", {
+                    colors: {
+                        primary: "#4a4a4a",
+                        green: "#429e6f",
+                        blue: "#3f9fc6",
+                        purple: "#9951c9",
+                        red: "#ff4d3d",
+                    },
+                });
+
+                // the template for each attribute in a node's array of item data
+                const itemTempl = new go.Panel("Horizontal", {
+                        margin: new go.Margin(2, 0)
+                    })
                     .add(
-                      new go.TextBlock("Attributes", {
-                        row: 0,
-                        alignment: go.Spot.Left,
-                        margin: new go.Margin(3, 24, 3, 2),
-                        font: "bold 15px sans-serif",
-                      }).theme("stroke", "text"),
-                      go.GraphObject.build(
-                        "PanelExpanderButton",
-                        {
-                          row: 0,
-                          alignment: go.Spot.Right,
-                        },
-                        "NonInherited"
-                      ).theme("ButtonIcon.stroke", "text"),
-                      new go.Panel("Vertical", {
-                        row: 1,
-                        name: "NonInherited",
-                        alignment: go.Spot.TopLeft,
-                        defaultAlignment: go.Spot.Left,
-                        itemTemplate: itemTempl,
-                      }).bind("itemArray", "items"),
-                      new go.TextBlock("Inherited Attributes", {
-                        row: 2,
-                        alignment: go.Spot.Left,
-                        margin: new go.Margin(3, 24, 3, 2),
-                        font: "bold 15px sans-serif",
-                      })
-                        .bind("visible", "inheritedItems", (arr) => Array.isArray(arr) && arr.length > 0)
-                        .theme("stroke", "text"),
-                      go.GraphObject.build(
-                        "PanelExpanderButton",
-                        {
-                          row: 2,
-                          alignment: go.Spot.Right,
-                        },
-                        "Inherited"
-                      )
-                        .bind("visible", "inheritedItems", (arr) => Array.isArray(arr) && arr.length > 0)
-                        .theme("ButtonIcon.stroke", "text"),
-                      new go.Panel("Vertical", {
-                        row: 3,
-                        name: "Inherited",
-                        alignment: go.Spot.TopLeft,
-                        defaultAlignment: go.Spot.Left,
-                        itemTemplate: itemTempl,
-                      }).bind("itemArray", "inheritedItems")
+                        new go.Shape({
+                            desiredSize: new go.Size(15, 15),
+                            strokeWidth: 0,
+                            margin: new go.Margin(0, 5, 0, 0),
+                        })
+                        .bind("figure")
+                        .themeData("fill", "color"),
+                        new go.TextBlock({
+                            font: "14px sans-serif",
+                        })
+                        .bind("text", "name")
+                        .bind("font", "iskey", (k) => k ? "italic 14px sans-serif" : "14px sans-serif")
+                        .theme("stroke", "text")
+                    );
+
+                // define the Node template
+                myDiagram.nodeTemplate =
+                    new go.Node("Auto", {
+                        selectionAdorned: true,
+                        resizable: true,
+                        layoutConditions: go.LayoutConditions.Standard & ~go.LayoutConditions.NodeSized,
+                        fromSpot: go.Spot.LeftRightSides,
+                        toSpot: go.Spot.LeftRightSides
+                    })
+                    .bindTwoWay("location")
+                    .bindObject("desiredSize", "visible",
+                        (v) => new go.Size(NaN, NaN),
+                        undefined,
+                        "LIST"
                     )
-                )
-            );
+                    .add(
+                        new go.Shape("RoundedRectangle", {
+                            stroke: "#e8f1ff",
+                            strokeWidth: 3,
+                        }).theme("fill", "primary"),
+                        new go.Panel("Table", {
+                            margin: 8,
+                            stretch: go.Stretch.Fill
+                        })
+                        .addRowDefinition(0, {
+                            sizing: go.Sizing.None
+                        })
+                        .add(
+                            // table header
+                            new go.TextBlock({
+                                row: 0,
+                                alignment: go.Spot.Center,
+                                margin: new go.Margin(0, 24, 0, 2),
+                                font: "bold 18px sans-serif",
+                            })
+                            .bind("text", "key")
+                            .theme("stroke", "text"),
+                            // collapse/expand button
+                            go.GraphObject.build(
+                                "PanelExpanderButton", {
+                                    row: 0,
+                                    alignment: go.Spot.TopRight,
+                                },
+                                "LIST"
+                            ).theme("ButtonIcon.stroke", "text"),
+                            new go.Panel("Table", {
+                                name: "LIST",
+                                row: 1,
+                                alignment: go.Spot.TopLeft
+                            })
+                            .add(
+                                new go.TextBlock("Attributes", {
+                                    row: 0,
+                                    alignment: go.Spot.Left,
+                                    margin: new go.Margin(3, 24, 3, 2),
+                                    font: "bold 15px sans-serif",
+                                }).theme("stroke", "text"),
+                                go.GraphObject.build(
+                                    "PanelExpanderButton", {
+                                        row: 0,
+                                        alignment: go.Spot.Right,
+                                    },
+                                    "NonInherited"
+                                ).theme("ButtonIcon.stroke", "text"),
+                                new go.Panel("Vertical", {
+                                    row: 1,
+                                    name: "NonInherited",
+                                    alignment: go.Spot.TopLeft,
+                                    defaultAlignment: go.Spot.Left,
+                                    itemTemplate: itemTempl,
+                                }).bind("itemArray", "items"),
+                                new go.TextBlock("Inherited Attributes", {
+                                    row: 2,
+                                    alignment: go.Spot.Left,
+                                    margin: new go.Margin(3, 24, 3, 2),
+                                    font: "bold 15px sans-serif",
+                                })
+                                .bind("visible", "inheritedItems", (arr) => Array.isArray(arr) && arr.length > 0)
+                                .theme("stroke", "text"),
+                                go.GraphObject.build(
+                                    "PanelExpanderButton", {
+                                        row: 2,
+                                        alignment: go.Spot.Right,
+                                    },
+                                    "Inherited"
+                                )
+                                .bind("visible", "inheritedItems", (arr) => Array.isArray(arr) && arr.length > 0)
+                                .theme("ButtonIcon.stroke", "text"),
+                                new go.Panel("Vertical", {
+                                    row: 3,
+                                    name: "Inherited",
+                                    alignment: go.Spot.TopLeft,
+                                    defaultAlignment: go.Spot.Left,
+                                    itemTemplate: itemTempl,
+                                }).bind("itemArray", "inheritedItems")
+                            )
+                        )
+                    );
 
-          // define the Link template
-          myDiagram.linkTemplate =
-            new go.Link({
-              selectionAdorned: true,
-              layerName: "Background",
-              reshapable: true,
-              routing: go.Routing.AvoidsNodes,
-              corner: 5,
-              curve: go.Curve.JumpOver
-            })
-            .add(
-              new go.Shape({
-                stroke: "#f7f9fc",
-                strokeWidth: 3,
-              }).theme("stroke", "link"),
-              new go.TextBlock({
-                textAlign: "center",
-                font: "bold 14px sans-serif",
-                segmentIndex: 0,
-                segmentOffset: new go.Point(NaN, NaN),
-                segmentOrientation: go.Orientation.Upright,
-              })
-                .bind("text")
-                .theme("stroke", "text"),
-              new go.TextBlock({
-                textAlign: "center",
-                font: "bold 14px sans-serif",
-                segmentIndex: -1,
-                segmentOffset: new go.Point(NaN, NaN),
-                segmentOrientation: go.Orientation.Upright,
-              })
-                .bind("text", "toText")
-                .theme("stroke", "text")
-            );
+                // define the Link template
+                myDiagram.linkTemplate =
+                    new go.Link({
+                        selectionAdorned: true,
+                        layerName: "Background",
+                        reshapable: true,
+                        routing: go.Routing.AvoidsNodes,
+                        corner: 5,
+                        curve: go.Curve.JumpOver
+                    })
+                    .add(
+                        new go.Shape({
+                            stroke: "#f7f9fc",
+                            strokeWidth: 3,
+                        }).theme("stroke", "link"),
+                        new go.TextBlock({
+                            textAlign: "center",
+                            font: "bold 14px sans-serif",
+                            segmentIndex: 0,
+                            segmentOffset: new go.Point(NaN, NaN),
+                            segmentOrientation: go.Orientation.Upright,
+                        })
+                        .bind("text")
+                        .theme("stroke", "text"),
+                        new go.TextBlock({
+                            textAlign: "center",
+                            font: "bold 14px sans-serif",
+                            segmentIndex: -1,
+                            segmentOffset: new go.Point(NaN, NaN),
+                            segmentOrientation: go.Orientation.Upright,
+                        })
+                        .bind("text", "toText")
+                        .theme("stroke", "text")
+                    );
 
-          // create the model for the E-R diagram
-          const nodeDataArray = [
-            {
-              key: "Students",
-              location: new go.Point(100, 100),
-              items: [
-                {
-                  name: "Full Name",
-                  iskey: true,
-                  figure: "Decision",
-                  color: "purple",
-                },
-                {
-                  name: "Middle Initial",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "First Name",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "Last Name",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "Suffix",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "PID Link",
-                  iskey: true,
-                  figure: "Decision",
-                  color: "purple",
-                },
-                {
-                  name: "DOB",
-                  iskey: false,
-                  figure: "Circle",
-                  color: "green",
-                },
-                {
-                  name: "SS#",
-                  iskey: true,
-                  figure: "Decision",
-                  color: "purple",
-                },
-                {
-                  name: "Citizenship Status",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "City/County Residence",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "Address Line 1",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "Address Line 2",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "Zipcode",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "Alternate Address",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "Race",
-                  iskey: false,
-                  figure: "TriangleUp",
-                  color: "red",
-                },
-                {
-                  name: "Additional Race (if applicable)",
-                  iskey: false,
-                  figure: "TriangleUp",
-                  color: "red",
-                },
-                {
-                  name: "Ethnicity",
-                  iskey: false,
-                  figure: "TriangleUp",
-                  color: "red",
-                },
-                {
-                  name: "Gender at Birth",
-                  iskey: false,
-                  figure: "TriangleUp",
-                  color: "red",
-                },
-                {
-                  name: "Gender Identity",
-                  iskey: false,
-                  figure: "TriangleUp",
-                  color: "red",
-                },
-                {
-                  name: "Student Email",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "Primary Phone #",
-                  iskey: false,
-                  figure: "Circle",
-                  color: "green",
-                },
-                {
-                  name: "Secondary Phone Number",
-                  iskey: false,
-                  figure: "Circle",
-                  color: "green",
-                },
-                {
-                  name: "School Name",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "Current Grade",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "YES ID",
-                  iskey: true,
-                  figure: "Decision",
-                  color: "purple",
-                },
-              ],
-              inheritedItems: [],
-            },
-            {
-              key: "Programs",
-              location: new go.Point(300, 300),
-              items: [
-                {
-                  name: "Program_ID",
-                  iskey: true,
-                  figure: "Decision",
-                  color: "purple",
-                },
-                {
-                  name: "Program_Name",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-              ],
-            },
-            {
-              key: "Student_Program_Enrollment",
-              location: new go.Point(10, 10), // Adjust positioning
-              items: [
-                {
-                  name: "Enrollment_ID",
-                  iskey: true,
-                  figure: "Decision",
-                  color: "purple",
-                },
-                {
-                  name: "Student_ID",
-                  iskey: false,
-                  figure: "Decision",
-                  color: "purple",
-                }, // FK to Students
-                {
-                  name: "Program_ID",
-                  iskey: false,
-                  figure: "Decision",
-                  color: "purple",
-                }, // FK to Programs
-                {
-                  name: "Enrollment_Date",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "Enrollment_Status",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                }, // Active, Completed, Dropped
-              ],
-            },
-            {
-              key: "Courses",
-              location: new go.Point(200, 200),
-              items: [
-                {
-                  name: "Course_ID",
-                  iskey: true,
-                  figure: "Decision",
-                  color: "purple",
-                },
-                {
-                  name: "Course_Name",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "Program_ID",
-                  iskey: false,
-                  figure: "Decision",
-                  color: "purple",
-                },
-                {
-                  name: "Instructor_Name",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "Instructor_Phone",
-                  iskey: false,
-                  figure: "Circle",
-                  color: "green",
-                },
-                {
-                  name: "Instructor_Email",
-                  iskey: false,
-                  figure: "Circle",
-                  color: "green",
-                },
-                {
-                  name: "Meeting_Day",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "Meeting_Time",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "Meeting_Location",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-              ],
-            },
-            {
-              key: 'Awards',
-              location: new go.Point(250, 250),
-              items: [
-                {name: 'Award Name', isKey: true, figure: 'Decision', color: 'purple'}
-              ], 
-              // inheritedItems: [{ }]
-            },
-            {
-              key: "People",
-              location: new go.Point(700, 250),
-              items: [
-                {
-                  name: "Relationship to Youth",
-                  iskey: true,
-                  figure: "Decision",
-                  color: "purple",
-                },
-                {
-                  name: "Email Contact",
-                  iskey: false,
-                  figure: "Hexagon",
-                  color: "blue",
-                },
-                {
-                  name: "Phone Contact",
-                  iskey: false,
-                  figure: "Circle",
-                  color: "green",
+                // create the model for the E-R diagram
+                const nodeDataArray = [{
+                    key: "Students",
+                    location: new go.Point(100, 100),
+                    items: [{
+                        name: "Full Name",
+                        iskey: true,
+                        figure: "Decision",
+                        color: "purple",
+                    }, {
+                        name: "Middle Initial",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "First Name",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Last Name",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Suffix",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "PID Link",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "DOB",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "SS#",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Citizenship Status",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "City/County Residence",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Address Line 1",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Address Line 2",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Zipcode",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Alternate Address",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Race",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Additional Race (if applicable)",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Ethnicity",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Gender at Birth",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Gender Identity",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Student Email",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Primary Phone #",
+                        iskey: false,
+                        figure: "Circle",
+                        color: "green",
+                    }, {
+                        name: "Secondary Phone Number",
+                        iskey: false,
+                        figure: "Circle",
+                        color: "green",
+                    }, {
+                        name: "School Name",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Current Grade",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "YES ID",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, ],
+                    inheritedItems: [],
+                }, {
+                    key: "Programs",
+                    location: new go.Point(300, 300),
+                    items: [{
+                        name: "Program_ID",
+                        iskey: true,
+                        figure: "Decision",
+                        color: "purple",
+                    }, {
+                        name: "Program_Name",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, ],
+                }, {
+                    key: "Student_Program_Enrollment",
+                    location: new go.Point(10, 10), // Adjust positioning
+                    items: [{
+                            name: "Enrollment_ID",
+                            iskey: true,
+                            figure: "Decision",
+                            color: "purple",
+                        }, {
+                            name: "Student_ID",
+                            iskey: false,
+                            figure: "Decision",
+                            color: "red",
+                        }, // FK to Students
+                        {
+                            name: "Program_ID",
+                            iskey: false,
+                            figure: "Decision",
+                            color: "red",
+                        }, // FK to Programs
+                        {
+                            name: "Enrollment_Date",
+                            iskey: false,
+                            figure: "Hexagon",
+                            color: "blue",
+                        }, {
+                            name: "Enrollment_Status",
+                            iskey: false,
+                            figure: "Hexagon",
+                            color: "blue",
+                        }, // Active, Completed, Dropped
+                    ],
+                }, {
+                    key: "Courses",
+                    location: new go.Point(200, 200),
+                    items: [{
+                        name: "Course_ID",
+                        iskey: true,
+                        figure: "Decision",
+                        color: "purple",
+                    }, {
+                        name: "Course_Name",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Program_ID",
+                        iskey: false,
+                        figure: "Decision",
+                        color: "red",
+                    }, {
+                        name: "Instructor_Name",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Instructor_Phone",
+                        iskey: false,
+                        figure: "Circle",
+                        color: "green",
+                    }, {
+                        name: "Instructor_Email",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Meeting_Day",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Meeting_Time",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Meeting_Location",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, ],
+                }, {
+                    key: 'Awards',
+                    location: new go.Point(250, 250),
+                    items: [{
+                        name: 'Award Name',
+                        isKey: true,
+                        figure: 'Decision',
+                        color: 'purple'
+                    }],
+                    // inheritedItems: [{ }]
+                }, {
+                    key: "People",
+                    location: new go.Point(700, 250),
+                    items: [{
+                        name: "Relationship to Youth",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Email Contact",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Phone Contact",
+                        iskey: false,
+                        figure: "Circle",
+                        color: "green",
+                    }],
+                }, {
+                    key: 'Home Profile',
+                    location: new go.Point(1000, 1000),
+                    items: [{
+                        name: 'How often do you hang out with your family?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'How often are you in your room when you are at home?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'How often do you get into arguments with others in your home?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'How many siblings do you have?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Do you live in a home, apartment, or townhome?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Do you have your own room?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'How many adults live in your house?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'What are your interactions like with other adults in your house?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'How often do you have contact with adults in your house?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Who is Working',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Supportive Adults at Home?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Any new or transient adults in house?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Additional Note:',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }]
+                }, {
+                    key: 'Home Visit',
+                    location: new go.Point(1000, 1200),
+                    items: [{
+                        name: 'Date',
+                        isKye: false,
+                        figure: "Hexagon",
+                        color: "yellow",
+                    }, {
+                        name: 'Location',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Attendees',
+                        isKey: false,
+                        figure: "Circle",
+                        color: "green",
+                    }, {
+                        name: 'Structural Safety',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Resident Updates',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Food Security',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Curfew Compliance',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Critical Incidences',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Additional Notes',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }]
+
+                }, {
+                    key: 'School Profile',
+                    location: new go.Point(10, 10),
+                    items: [{
+                        name: 'IEP?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Learning Disability?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Testing Anxiety?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Held Back?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Behavioral Diagnosis?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Traumatic Events?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Harmful Behavior?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Running Away?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Healthy Peer Relationship?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Healthy Adult Relationship?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Support System?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Safe at School?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Additional Notes',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }]
+                }, {
+                    key: 'School Visit',
+                    location: new go.Point(10, 3),
+                    items: [{
+                            name: 'Date',
+                            isKey: false,
+                            figure: "Circle",
+                            color: "yellow",
+                        }, {
+                            name: 'Location',
+                            isKey: false,
+                            figure: "Hexagon",
+                            color: "blue",
+                        }, {
+                            name: 'Attendees',
+                            isKey: false,
+                            figure: "Circle",
+                            color: "green",
+                        }, {
+                            name: 'Attendance Rate',
+                            isKey: false,
+                            figure: "Circle",
+                            color: "green",
+                        }, {
+                            name: 'Barriers to Student Success',
+                            isKey: false,
+                            figure: "Hexagon",
+                            color: "blue",
+                        }, {
+                            name: 'Successful Classes',
+                            isKey: false
+                        }, {
+                            name: 'Classes in Need of Assistance',
+                            isKey: false
+                        }, {
+                            name: 'Critical Incidences',
+                            isKey: false
+                        }, {
+                            name: 'Additional Note',
+                            isKey: false,
+                            figure: "Hexagon",
+                            color: "blue",
+                        }
+
+                    ]
+                }, {
+                    key: 'Community Profile',
+                    location: new go.Point(500, 500),
+                    items: [{
+                        name: 'What problem(s) do you hope to solve?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'What are your favorite things about your community?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'What is missing in your community',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: 'Safe in your community?',
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }]
+                }, {
+                    key: "Court Appearances",
+                    location: new go.Point(900, 500),
+                    items: [{
+                        name: "Date",
+                        isKey: false,
+                        figure: "Circle",
+                        color: "yellow",
+                    }, {
+                        name: "Location",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Officer/Judge",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Attendees",
+                        isKey: false,
+                        figure: "Circle",
+                        color: "yellow",
+                    }, {
+                        name: "Notes",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Disposition(s)",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Next Scheduled Hearing (if applicable)",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }]
+                }, {
+                    key: "Clients",
+                    location: new go.Point(1000, 1000),
+                    items: [{
+                        name: "Last Name",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "First Name",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Program Status",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Level of Service",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Intervention Specialist",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Call Type",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "MP Program Involvement?",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Client Notes",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }]
+                }, {
+                    key: "Service Provision",
+                    location: new go.Point(1000, 600),
+                    items: [{
+                        name: "School Goal",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "School Intervention Category",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "School Intervention Description",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "School Frequency Intervention Staff",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "School Frequency Intervention Student",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "School Developed Skills",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "School Developed Status",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Community Outcome",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Community Goal",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Community Intervention Category",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Community Intervention Description",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Community Frequency Intervention Staff",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Community Frequency Intervention Student",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Community Developed Skills",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Community Developed Status",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Community Outcome",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Personal Goal",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Personal Intervention Category",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Personal Intervention Description",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Personal Frequency Intervention Staff",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Personal Frequency Intervention Student",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Personal Developed Skills",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Personal Developed Status",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Personal Outcome",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }]
+                }, {
+                    key: "Medical",
+                    location: new go.Point(1000, 800),
+                    items: [{
+                        name: "Medical Concerns",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Medical Concerns",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Medical Concerns",
+                        iskey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Medications",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Permission to Transport?",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Notes",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }]
+                }];
+                const linkDataArray = [{
+                    from: "Student_Program_Enrollment",
+                    to: "Students",
+                    text: "0..N",
+                    toText: "1", // many enrollments belong to 1 student
+                }, {
+                    from: "Student_Program_Enrollment",
+                    to: "Programs",
+                    text: "0..N",
+                    toText: "1", // many enrollments belong to 1 program
+                }, {
+                    from: "Courses",
+                    to: "Programs",
+                    text: "0..N",
+                    toText: "1", // many courses belong to 1 program
+                }, {
+                    from: "Order Details",
+                    to: "Products",
+                    text: "0..N",
+                    toText: "1",
+                }, {
+                    from: "Students",
+                    to: "Awards",
+                    text: "0..N",
+                    toText: "1",
+                }, {
+                    from: "Students",
+                    to: "School Profile",
+                    text: "0..N",
+                    toText: "1",
+                }, {
+                    from: "School Profile",
+                    to: "School Visit",
+                    text: "0..N",
+                    toText: "1",
+                }, {
+                    from: "Students",
+                    to: "Community Profile",
+                    text: "0..N",
+                    toText: "1",
+                }, {
+                    from: "Students",
+                    to: "Home Profile",
+                    text: "0..N",
+                    toText: "1",
+                }, {
+                    from: "Home Profile",
+                    to: "Home Visit",
+                    text: "0..N",
+                    toText: "1",
+                }, {
+                    from: "Students",
+                    to: "People",
+                    text: "0..N",
+                    toText: "1",
+                }, {
+                    from: "Students",
+                    to: "Court Appearances",
+                    text: "0..N",
+                    toText: "1",
+                }, {
+                    from: "People",
+                    to: "Clients",
+                    text: "0..N",
+                    toText: "1",
+                }, {
+                    from: "Students",
+                    to: "Medical",
+                    text: "0..N",
+                    toText: "1",
+                }, {
+                    from: "Students",
+                    to: "Service Provision",
+                    text: "0..N",
+                    toText: "1",
+                }];
+                myDiagram.model = new go.GraphLinksModel({
+                    copiesArrays: true,
+                    copiesArrayObjects: true,
+                    nodeDataArray: nodeDataArray,
+                    linkDataArray: linkDataArray,
+                });
+            }
+
+            const changeTheme = () => {
+                const myDiagram = go.Diagram.fromDiv("myDiagramDiv");
+                if (myDiagram) {
+                    myDiagram.themeManager.currentTheme =
+                        document.getElementById("theme").value;
                 }
-              ],
-            },
-            {
-              key: 'Home Profile',
-              location: new go.Point(1000, 1000),
-              items: [
-                {name: 'How often do you hang out with your family?', isKey: false}, 
-                {name: 'How often are you in your room when you are at home?', isKey: false},
-                {name: 'How often do you get into arguments with others in your home?', isKey: false},
-                {name: 'How many siblings do you have?', isKey: false},
-                {name: 'Do you live in a home, apartment, or townhome?', isKey: false},
-                {name: 'Do you have your own room?', isKey: false},
-                {name: 'How many adults live in your house?', isKey: false},
-                {name: 'What are your interactions like with other adults in your house?', isKey: false}, 
-                {name: 'How often do you have contact with adults in your house?', isKey: false},
-                {name: 'Who is Working', isKey: false},
-                {name: 'Supportive Adults at Home?', isKey: false},
-                {name: 'Any new or transient adults in house?', isKey: false}, 
-                {name: 'Additional Note:', isKey: false}
-              ]
-            },
-            {
-              key: 'Home Visit', 
-              location: new go.Point(1000, 1200),
-              items: [
-                {name: 'Date', isKye: false},
-                {name: 'Location', isKey: false}, 
-                {name: 'Attendees', isKey: false}, 
-                {name: 'Structural Safety', isKey: false}, 
-                {name: 'Resident Updates', isKey: false},
-                {name: 'Food Security', isKey: false}, 
-                {name: 'Curfew Compliance', isKey: false},
-                {name: 'Critical Incidences', isKey: false}, 
-                {name: 'Additional Notes', isKey: false}
-              ]
-      
-            },
-            {
-              key: 'School Profile',
-              location: new go.Point(10, 10),
-              items: [
-                {name: 'IEP?', isKey: false}, 
-                {name: 'Learning Disability?', isKey: false},
-                {name: 'Testing Anxiety?', isKey: false},
-                {name: 'Held Back?', isKey: false},
-                {name: 'Behavioral Diagnosis?', isKey: false},
-                {name: 'Traumatic Events?', isKey: false}, 
-                {name: 'Harmful Behavior?', isKey: false},
-                {name: 'Running Away?', isKey: false}, 
-                {name: 'Healthy Peer Relationship?', isKey: false}, 
-                {name: 'Healthy Adult Relationship?', isKey: false},
-                {name: 'Support System?', isKey: false}, 
-                {name: 'Safe at School?', isKey: false},
-                {name: 'Additional Notes', isKey: false}
-              ]
-            }, 
-            {
-              key: 'School Visit', 
-              location: new go.Point(10, 3), 
-              items: [
-                {name: 'Date', isKey: false}, 
-                {name: 'Location', isKey: false}, 
-                {name: 'Attendees', isKey: false}, 
-                {name: 'Attendance Rate', isKey: false},
-                {name: 'Barriers to Student Success', isKey: false}, 
-                {name: 'Successful Classes', isKey: false}, 
-                {name: 'Classes in Need of Assistance', isKey: false}, 
-                {name: 'Critical Incidences', isKey: false}, 
-                {name: 'Additional Note', isKey: false}
-      
-              ]
-            }, 
-            {
-              key: 'Community Profile', 
-              location: new go.Point(500, 500), 
-              items: [
-                {name: 'What problem(s) do you hope to solve?', isKey: false},
-                {name: 'What are your favorite things about your community?', isKey: false}, 
-                {name: 'What is missing in your community', isKey: false}, 
-                {name: 'Safe in your community?', isKey: false}
-              ]
-            },
-            {
-              key: "Court Appearances", 
-              location: new go.Point(900, 500),
-              items: [
-                {name: "Date", isKey: false}, 
-                {name: "Location", isKey: false},
-                {name: "Officer/Judge"}, 
-                {name: "Attendees"}, 
-                {name: "Notes"}, 
-                {name: "Disposition(s)"}, 
-                {name: "Next Scheduled Hearing (if applicable)"}
-              ]
-            },
-            {
-              key: "Clients",
-              location: new go.Point(1000, 1000),
-              items: [
-              {
-                name: "Last Name",
-                iskey: true,
-                figure: "Rectangle",
-                color: "red",
-              },
-              {
-                name: "First Name",
-                iskey: false,
-                figure: "Rectangle",
-                color: "red",
-              },
-              {
-                name: "Program Status",
-                iskey: false,
-                figure: "Hexagon",
-                color: "blue",
-              },
-              {
-                name: "Level of Service",
-                iskey: false,
-                figure: "Hexagon",
-                color: "blue",
-              },
-              {
-                name: "Intervention Specialist",
-                iskey: false,
-                figure: "Circle",
-                color: "green",
-              },
-              {
-                name: "Call Type",
-                iskey: false,
-                figure: "Circle",
-                color: "green",
-              },
-              {
-                name: "MP Program Involvement?",
-                iskey: false,
-                figure: "Decision",
-                color: "purple",
-              },
-              {
-                name: "Client Notes",
-                iskey: false,
-                figure: "Rectangle",
-                color: "red",
-              }
-              ]
-            },
-            {
-              key: "Service Provision", 
-              location: new go.Point(1000, 600),
-              items: [
-                {name: "School Goal"},
-                {name: "School Intervention Category"}, 
-                {name: "School Intervention Description"},
-                {name: "School Frequency Intervention Staff"}, 
-                {name: "School Frequency Intervention Student"}, 
-                {name: "School Developed Skills"},
-                {name: "School Developed Status"},
-                {name: "Community Outcome"}, 
-                {name: "Community Goal"}, 
-                {name: "Community Intervention Category"},
-                {name: "Community Intervention Description"}, 
-                {name: "Community Frequency Intervention Staff"}, 
-                {name: "Community Frequency Intervention Student"},
-                {name: "Community Developed Skills"}, 
-                {name: "Community Developed Status"}, 
-                {name: "Community Outcome"},
-                {name: "Personal Goal"}, 
-                {name: "Personal Intervention Category"}, 
-                {name: "Personal Intervention Description"}, 
-                {name: "Personal Frequency Intervention Staff"}, 
-                {name: "Personal Frequency Intervention Student"}, 
-                {name: "Personal Developed Skills"}, 
-                {name: "Personal Developed Status"}, 
-                {name: "Personal Outcome"}
-              ]
-            },
-            {
-              key: "Medical",
-              location: new go.Point(1000, 800),
-              items: [
-              {
-                name: "Medical Concerns",
-                iskey: false,
-                figure: "Hexagon",
-                color: "blue",
-              },
-              {
-                name: "Medical Concerns",
-                iskey: false,
-                figure: "Hexagon",
-                color: "blue",
-              },
-              {
-                name: "Medical Concerns",
-                iskey: false,
-                figure: "Hexagon",
-                color: "blue",
-              },
-              {
-                name: "Medications",
-                iskey: false,
-                figure: "Circle",
-                color: "green",
-              },
-              {
-                name: "Permission to Transport?",
-                iskey: false,
-                figure: "Decision",
-                color: "purple",
-              },
-              {
-                name: "Notes",
-                iskey: false,
-                figure: "Rectangle",
-                color: "red",
-              }
-              ]
-            }
-          ];
-          const linkDataArray = [
-            {
-                from: "Student_Program_Enrollment",
-                to: "Students",
-                text: "0..N",
-                toText: "1", // many enrollments belong to 1 student
-            },
-            {
-                from: "Student_Program_Enrollment",
-                to: "Programs",
-                text: "0..N",
-                toText: "1", // many enrollments belong to 1 program
-            },
-            {
-                from: "Courses",
-                to: "Programs",
-                text: "0..N",
-                toText: "1", // many courses belong to 1 program
-            },
-            {
-                from: "Order Details",
-                to: "Products",
-                text: "0..N",
-                toText: "1",
-            },
-            {
-              from: "Students",
-              to: "Awards",
-              text: "0..N",
-              toText: "1",
-            },
-            {
-                from: "Students",
-                to: "School Profile",
-                text: "0..N",
-                toText: "1",
-            },
-            {
-              from: "School Profile",
-              to: "School Visit",
-              text: "0..N",
-              toText: "1",
-            },
-            {
-              from: "Students",
-              to: "Community Profile",
-              text: "0..N",
-              toText: "1",
-            },
-            {
-              from: "Students",
-              to: "Home Profile",
-              text: "0..N",
-              toText: "1",
-            },
-            {
-              from: "Home Profile",
-              to: "Home Visit",
-              text: "0..N",
-              toText: "1",
-            },
-            {
-              from: "Students",
-              to: "People",
-              text: "0..N",
-              toText: "1",
-            },
-            {
-              from: "Students",
-              to: "Court Appearances",
-              text: "0..N",
-              toText: "1",
-            },
-            {
-              from: "People",
-              to: "Clients",
-              text: "0..N",
-              toText: "1",
-            },
-            {
-              from: "Students",
-              to: "Medical",
-              text: "0..N",
-              toText: "1",
-            },
-            {
-              from: "Students",
-              to: "Service Provision",
-              text: "0..N",
-              toText: "1",
-            }
-          ];
-          myDiagram.model = new go.GraphLinksModel({
-            copiesArrays: true,
-            copiesArrayObjects: true,
-            nodeDataArray: nodeDataArray,
-            linkDataArray: linkDataArray,
-          });
-        }
+            };
 
-        const changeTheme = () => {
-          const myDiagram = go.Diagram.fromDiv("myDiagramDiv");
-          if (myDiagram) {
-            myDiagram.themeManager.currentTheme =
-              document.getElementById("theme").value;
-          }
-        };
+            window.addEventListener("DOMContentLoaded", init);
+        </script>
 
-        window.addEventListener("DOMContentLoaded", init);
-      </script>
-
-      <div id="sample">
-        <div
-          id="myDiagramDiv"
-          style="
+        <div id="sample">
+            <div id="myDiagramDiv" style="
             background-color: white;
             border: solid 1px black;
             width: 100%;
             height: 700px;
-          "
-        ></div>
-        Theme:
-        <select id="theme" onchange="changeTheme()">
+          "></div>
+            Theme:
+            <select id="theme" onchange="changeTheme()">
           <option value="system">System</option>
           <option value="light">Light</option>
           <option value="dark">Dark</option>
         </select>
-        <p>
-          Sample for representing the relationship between various entities. Try
-          dragging the nodes -- their links will avoid other nodes, by virtue of
-          the
-          <a>Routing.AvoidsNodes</a> property assigned to the custom link template's <a>Link.routing</a>. Also note the use of
-        <a href="../intro/buttons.html" target="_blank">Panel Expander Buttons</a
+            <p>
+                Sample for representing the relationship between various entities. Try dragging the nodes -- their links will avoid other nodes, by virtue of the
+                <a>Routing.AvoidsNodes</a> property assigned to the custom link template's <a>Link.routing</a>. Also note the use of
+                <a href="../intro/buttons.html" target="_blank">Panel Expander Buttons</a
           >
           to allow for expandable/collapsible node data.
         </p>
@@ -878,8 +1091,8 @@
         <p>
           The dark and light themes are controlled using the
           <a>ThemeManager</a>.
-    </p>
-    </div>
+            </p>
+        </div>
     </div>
 </body>
 
