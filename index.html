@@ -965,6 +965,20 @@
                         figure: "Hexagon",
                         color: "blue",
                     }]
+                }, {
+                    key: "Outing",
+                    location: new go.Point(1200, 1200),
+                    items: [{
+                        name: "Symposium",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }, {
+                        name: "Michigan Trip",
+                        isKey: false,
+                        figure: "Hexagon",
+                        color: "blue",
+                    }]
                 }];
                 const linkDataArray = [{
                     from: "Student_Program_Enrollment",
@@ -1039,6 +1053,16 @@
                 }, {
                     from: "Students",
                     to: "Service Provision",
+                    text: "0..N",
+                    toText: "1",
+                }, {
+                    from: "Students",
+                    to: "Outing",
+                    text: "0..N",
+                    toText: "1",
+                }, {
+                    from: "Outing",
+                    to: "Programs",
                     text: "0..N",
                     toText: "1",
                 }];
