@@ -298,10 +298,11 @@ nodeDataArray = [
     }
 ]
 
+all_dfs = {}
+
 def create_csvs_from_node_data_array(
         input_csv_path: str, 
-        node_data: list, 
-        output_dir: str = "."
+        node_data: list
     ):
     """
     Creates a CSV file for each 'key' in nodeDataArray.
@@ -329,14 +330,21 @@ def create_csvs_from_node_data_array(
                 # Fill with None if not present
                 new_df[col_name] = None
         
-        # Write out to a new CSV named <key>.csv in the desired output directory
+        all_dfs[table_name] = new_df
+        
+def run_all_dfs(output_dir):
+    for row_id, (table_name, df) in enumerate(all_dfs.items()):
+        df["people"] = all_dfs["People"]["Name"]
+        
+    for table_name, new_df in all_dfs.items():
         output_path = f"{output_dir}/{table_name}.csv"
         new_df.to_csv(output_path, index=False)
         print(f"Created CSV for table '{table_name}' -> {output_path}")
 
 if __name__ == "__main__":
     create_csvs_from_node_data_array(
-        input_csv_path="master.csv",
+        input_csv_path="CMU IS 2025 Sample Roster Information - Reference (1).csv",
         node_data=nodeDataArray,
-        output_dir="."
     )
+    output_dir="."
+    run_all_dfs(output_dir)
