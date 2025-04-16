@@ -137,9 +137,6 @@ nodeDataArray = [
             {"name": "Email Contact", "isKey": False},
             {"name": "Phone Contact", "isKey": False},
             {"name": "Student", "isKey": False},
-            
-            
-   
         ],
     },
     {
@@ -318,7 +315,7 @@ nodeDataArray = [
             {"name": "Worksite Visit Location", "isKey": False},
             {"name": "Worksite Schedule", "isKey": False}, 
         ]
-    }, 
+    },
     {
         "key": "Fiscal",
         "items": [
@@ -337,7 +334,7 @@ nodeDataArray = [
             {"name": "Pay 3", "isKey": False},
     
         ]
-    }, 
+    },
     {
         "key": "Awards",
         "items": [
@@ -347,14 +344,9 @@ nodeDataArray = [
             {"name": "Workplace Excellence", "isKey": False},
             {"name": "Superlative", "isKey": False},
             {"name": "Worksite", "isKey": False},
-            {"name": "Certificate of Completion", "isKey": False},
-        
-            
-    
+            {"name": "Certificate of Completion", "isKey": False}
         ]
-    }, 
-
-
+    },
 ]
 
 all_dfs = {}
@@ -384,7 +376,11 @@ def create_csvs_from_node_data_array(
             
             # If the column exists in the original CSV, copy it
             if col_name in df.columns:
-                new_df[col_name] = df[col_name]
+                matching_indices = [i for i, col in enumerate(df.columns) if col_name in col]
+                df_columns = df.iloc[:, matching_indices]
+                if col_name == "Medical Concerns":
+                    print(matching_indices)
+                new_df[col_name] = pd.DataFrame(df_columns.values.flatten(), columns=[col_name])
             else:
                 # Fill with None if not present
                 new_df[col_name] = None
@@ -392,8 +388,25 @@ def create_csvs_from_node_data_array(
         all_dfs[table_name] = new_df
         
 def run_all_dfs(output_dir):
-    for row_id, (table_name, df) in enumerate(all_dfs.items()):
-        df["people"] = all_dfs["People"]["Name"]
+    student_df = all_dfs["Student"]
+    number_of_students = len(student_df)
+    
+    for table_name, new_df in all_dfs.items():
+        if table_name != "Medical":
+            num_missing = number_of_students - len(new_df)
+            if num_missing > 0:
+                padding = pd.DataFrame([ [None]*len(new_df.columns) ] * num_missing, columns=new_df.columns)
+                new_df = pd.concat([new_df, padding], ignore_index=True)
+
+    for row_id in range(len(student_df)):
+        student_df["People"] = all_dfs["People"]["Name"]
+        for i in range(3):
+            student_df["Medical"] = row_id + i
+        student_df["Award"] = all_dfs["Award"]["Award Name"]
+        student_df["Program"] = all_dfs["Program"]["Program Name"]
+        student_df["School Profile"] = row_id
+        student_df["Community Profile"] = row_id
+        student_df["Home Profile"] = row_id
         
     for table_name, new_df in all_dfs.items():
         output_path = f"{output_dir}/{table_name}.csv"
@@ -402,8 +415,9 @@ def run_all_dfs(output_dir):
 
 if __name__ == "__main__":
     create_csvs_from_node_data_array(
-        input_csv_path="CMU IS 2025 Sample Roster Information - Reference (1).csv",
+        input_csv_path="master.csv",
         node_data=nodeDataArray,
     )
     output_dir="."
     run_all_dfs(output_dir)
+
