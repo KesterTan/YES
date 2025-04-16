@@ -308,7 +308,7 @@ nodeDataArray = [
             {"name": "Worksite Supervisor Email", "isKey": False},
             {"name": "Worksite Visit Day", "isKey": False},
             {"name": "Worksite Visit Time", "isKey": False},
-            {"name": "Worksite Location", "isKey": False},
+            {"name": "Worksite Visit Location", "isKey": False},
             {"name": "Worksite Schedule", "isKey": False},
 
             
