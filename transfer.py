@@ -283,6 +283,7 @@ nodeDataArray = [
     {
         "key": "Medical",
         "items": [
+            {"name": "Medical_ID", "isKey": True},
             {"name": "Medical Concerns", "isKey": False},
             {"name": "Medications", "isKey": False},
             {"name": "Permission to Transport?", "isKey": False},
@@ -334,6 +335,21 @@ nodeDataArray = [
             {"name": "Pay 1", "isKey": False},
             {"name": "Pay 2", "isKey": False},
             {"name": "Pay 3", "isKey": False},
+    
+        ]
+    }, 
+    {
+        "key": "Awards",
+        "items": [
+            {"name": "Award_ID", "isKey": True},
+            {"name": "Youth Name", "isKey": False},
+            {"name": "Character Awards", "isKey": False},
+            {"name": "Workplace Excellence", "isKey": False},
+            {"name": "Superlative", "isKey": False},
+            {"name": "Worksite", "isKey": False},
+            {"name": "Certificate of Completion", "isKey": False},
+        
+            
     
         ]
     }, 
