@@ -119,10 +119,20 @@ nodeDataArray = [
         "key": "People",
         "items": [
             {"name": "Name", "isKey": True},
+            {"name": "Parent/Guardian Contact #1", "isKey:" False},
+            {"name": "Parent/Guardian #1 Relationship to Youth", "isKey:" False},
+            {"name": "Parent/Guardian Email Contact #1", "isKey:" False},
+            {"name": "Parent/Guardian Phone Contact #1", "isKey:" False},
+            {"name": "Emergency Contact Name", "isKey:" False},
+            {"name": "Emergency Contact Relationship", "isKey:" False},
+            {"name": "Emergency Contact Email", "isKey:" False},
+            {"name": "Emergency Contact Phone", "isKey:" False},
             {"name": "Relationship to Youth", "isKey": False},
             {"name": "Email Contact", "isKey": False},
             {"name": "Phone Contact", "isKey": False},
             {"name": "Student", "isKey": False},
+            
+            
    
         ],
     },
