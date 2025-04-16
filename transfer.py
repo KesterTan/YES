@@ -92,8 +92,14 @@ nodeDataArray = [
     {
         "key": "Course",
         "items": [
-            # {"name": "Course_ID", "isKey": True},
-            {"name": "Course_Name", "isKey": True},
+            {"name": "Course_ID", "isKey": True},
+            {"name": "Course_Name", "isKey": False},
+            {"name": "Course Instructor", "isKey": False},
+            {"name": "Course Instructor Phone", "isKey": False},
+            {"name": "Course Instructor Email", "isKey": False},
+            {"name": "Course Meeting Day", "isKey": False},
+            {"name": "Course Meeting Time", "isKey": False},
+            {"name": "Course Meeting Location", "isKey": False},
             {"name": "Program_ID", "isKey": False},
             {"name": "Instructor_Name", "isKey": False},
             {"name": "Instructor_Phone", "isKey": False},
