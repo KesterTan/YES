@@ -295,6 +295,24 @@ nodeDataArray = [
             {"name": "Date", "isKey": False},
             {"name": "Status", "isKey": False},
         ]
+    },
+    {
+        "key": "Worksite",
+        "items": [
+            {"name": "Worksite_ID", "isKey": True},
+            {"name": "Worksite", "isKey": False},
+            {"name": "Worksite Supervisor", "isKey": False},
+            {"name": "Worksite Supervisor Phone", "isKey": False},
+            {"name": "Worksite Supervisor Email", "isKey": False},
+            {"name": "Worksite Supervisor Phone", "isKey": False},
+            {"name": "Worksite Supervisor Email", "isKey": False},
+            {"name": "Worksite Visit Day", "isKey": False},
+            {"name": "Worksite Visit Time", "isKey": False},
+            {"name": "Worksite Location", "isKey": False},
+            {"name": "Worksite Schedule", "isKey": False},
+
+            
+        ]
     }
 ]
 
