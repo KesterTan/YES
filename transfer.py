@@ -315,11 +315,30 @@ nodeDataArray = [
             {"name": "Worksite Visit Day", "isKey": False},
             {"name": "Worksite Visit Time", "isKey": False},
             {"name": "Worksite Visit Location", "isKey": False},
-            {"name": "Worksite Schedule", "isKey": False},
-
-            
+            {"name": "Worksite Schedule", "isKey": False}, 
         ]
-    }
+    }, 
+    {
+        "key": "Fiscal",
+        "items": [
+            {"name": "Fiscal_ID", "isKey": True},
+            # len is supposed to be Last Name
+            {"name": "len", "isKey": False},
+            {"name": "First Name", "isKey": False},
+            {"name": "Total Hours Worked", "isKey": False},
+            {"name": "Total Hours Remaining", "isKey": False},
+            {"name": "Work Experience Hours Worked", "isKey": False},
+            {"name": "Work Experience Hours Remaining", "isKey": False},
+            {"name": "Training Hours Worked", "isKey": False},
+            {"name": "Training Hours Remaining", "isKey": False},
+            {"name": "Pay 1", "isKey": False},
+            {"name": "Pay 2", "isKey": False},
+            {"name": "Pay 3", "isKey": False},
+    
+        ]
+    }, 
+
+
 ]
 
 all_dfs = {}
