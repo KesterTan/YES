@@ -375,12 +375,21 @@ def create_csvs_from_node_data_array(
             if col_name in df.columns:
                 if col_name == "Medical Concerns":
                     matching_indices = [i for i, col in enumerate(df.columns) if col_name in col]
-                    df_columns = df.iloc[:, matching_indices]
+                    new_rows = []
+                    for idx, row in df.iterrows():
+                        for i in matching_indices:
+                            new_row = row.copy()
+                            new_row[col_name] = row[i]  # Replace the canonical col_name value
+                            new_rows.append(new_row)
+
+                    # Create a new DataFrame from the duplicated rows
+                    df_columns = pd.DataFrame(new_rows)
+                    new_df[col_name] = pd.DataFrame(df_columns.values.flatten(), columns=[col_name])
                 else:
                     matching_indices = [i for i, col in enumerate(df.columns) if col_name == col]
                     df_columns = df.iloc[:, matching_indices]
-    
-                new_df[col_name] = pd.DataFrame(df_columns.values.flatten(), columns=[col_name])
+
+                    new_df[col_name] = pd.DataFrame(df_columns.values.flatten(), columns=[col_name])
             else:
                 # Fill with None if not present
                 new_df[col_name] = None
@@ -420,4 +429,3 @@ if __name__ == "__main__":
     )
     output_dir="./test"
     run_all_dfs(output_dir)
-
