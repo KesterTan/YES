@@ -32,7 +32,7 @@ nodeDataArray = [
             {"name": "School", "isKey": False},
             {"name": "Current Grade", "isKey": False},
             {"name": "YES ID", "isKey": False},
-            {"name": "Interview Link", "isKey": "False"},
+            {"name": "Interview Link", "isKey": False},
             {"name": "Program Status", "isKey": False},
             {"name": "Program Completion Date", "isKey": False},
             {"name": "Court Appearance", "isKey": False},
@@ -62,8 +62,6 @@ nodeDataArray = [
             {"name": "Length of Program Involvement", "isKey": False},
             {"name": "Bank Account Status", "isKey": False},
             {"name": "Bank Account Institution", "isKey": False},
-    
-
         ],
     },
     {
@@ -76,7 +74,6 @@ nodeDataArray = [
             {"name": "Student", "isKey": False},
             {"name": "Photo Release", "isKey": False},
             {"name": "Number of Students", "isKey": False},
-            # {"name": "Program Description", "isKey": False}
         ],
     },
     {
@@ -370,16 +367,19 @@ def create_csvs_from_node_data_array(
         
         # Create an empty DataFrame; we will fill columns one by one
         new_df = pd.DataFrame()
-        
+                
         for item in items:
             col_name = item["name"]
             
             # If the column exists in the original CSV, copy it
             if col_name in df.columns:
-                matching_indices = [i for i, col in enumerate(df.columns) if col_name in col]
-                df_columns = df.iloc[:, matching_indices]
                 if col_name == "Medical Concerns":
-                    print(matching_indices)
+                    matching_indices = [i for i, col in enumerate(df.columns) if col_name in col]
+                    df_columns = df.iloc[:, matching_indices]
+                else:
+                    matching_indices = [i for i, col in enumerate(df.columns) if col_name == col]
+                    df_columns = df.iloc[:, matching_indices]
+    
                 new_df[col_name] = pd.DataFrame(df_columns.values.flatten(), columns=[col_name])
             else:
                 # Fill with None if not present
@@ -418,6 +418,6 @@ if __name__ == "__main__":
         input_csv_path="master.csv",
         node_data=nodeDataArray,
     )
-    output_dir="."
+    output_dir="./test"
     run_all_dfs(output_dir)
 
