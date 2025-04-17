@@ -382,9 +382,10 @@ def create_csvs_from_node_data_array(
                         # Create a new DataFrame from the duplicated rows
                         df_columns = df.iloc[:, matching_indices]
                     else:
-                        matching_indices = [i for i, col in enumerate(df.columns) if col_name in col]
-                        df_columns = df.iloc[:, matching_indices]
-                        df_columns = df_columns.loc[df_columns.index.repeat(3)].reset_index(drop=True)
+                        matching_indices_1 = [i for i, col in enumerate(df.columns) if col_name == col]
+                        df_columns = df.iloc[:, matching_indices_1]
+                        df_columns = df_columns.loc[df_columns.index.repeat(len(matching_indices))]
+                        
                     new_df[col_name] = pd.DataFrame(df_columns.values.flatten(), columns=[col_name])
                 else:
                     matching_indices = [i for i, col in enumerate(df.columns) if col_name == col]
