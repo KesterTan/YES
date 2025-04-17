@@ -5,8 +5,6 @@ def duplicate_except_medical_concerns():
     # Read CSV from stdin
     df = pd.read_csv(sys.stdin)
     
-    print(df)
-
     # Create a row_id to preserve original positions (1-indexed)
     df = df.reset_index().rename(columns={'index': 'row_id'})
     df['row_id'] += 1
@@ -37,7 +35,5 @@ def duplicate_except_medical_concerns():
     # Output to stdout
     final_df.to_csv(sys.stdout, index=False)
     
-    print(final_df)
-
 if __name__ == "__main__":
     duplicate_except_medical_concerns()
