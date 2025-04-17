@@ -374,10 +374,11 @@ def create_csvs_from_node_data_array(
             # If the column exists in the original CSV, copy it
             if col_name in df.columns:
                 if table_name == "Medical":
+                    all_column_names = [item["name"] for item in items if item["name"] in df.columns]
                     matching_indices = [i for i, col in enumerate(df.columns) if col_name in col]
                     # Create a new DataFrame from the duplicated rows
                     df_columns = df.iloc[:, matching_indices]
-                    new_df[col_name] = pd.DataFrame(df_columns.values.flatten(), columns=[col_name])
+                    new_df[col_name] = pd.DataFrame(df_columns.values.flatten(), columns=all_column_names)
                 else:
                     matching_indices = [i for i, col in enumerate(df.columns) if col_name == col]
                     df_columns = df.iloc[:, matching_indices]
