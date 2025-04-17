@@ -379,8 +379,10 @@ def create_csvs_from_node_data_array(
                     # all_column_names = [item["name"] for item in items if item["name"] in df.columns]
                     if col_name == "Medical Concerns":
                         matching_indices = [i for i, col in enumerate(df.columns) if col_name in col]
-                    # Create a new DataFrame from the duplicated rows
-                    df_columns = df.iloc[:, matching_indices]
+                        # Create a new DataFrame from the duplicated rows
+                        df_columns = df.iloc[:, matching_indices]
+                    else:
+                        df_columns = df.loc[df.index.repeat(len(matching_indices))].reset_index(drop=True)
                     new_df[col_name] = pd.DataFrame(df_columns.values.flatten(), columns=[col_name])
                 else:
                     matching_indices = [i for i, col in enumerate(df.columns) if col_name == col]
