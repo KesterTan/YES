@@ -376,17 +376,24 @@ def create_csvs_from_node_data_array(
             # If the column exists in the original CSV, copy it
             if col_name in df.columns:
                 if table_name == "Medical":
-                    # all_column_names = [item["name"] for item in items if item["name"] in df.columns]
                     if col_name == "Medical Concerns":
+                        # Find all column indices that match any "Medical Concerns" variant
                         matching_indices = [i for i, col in enumerate(df.columns) if col_name in col]
-                        # Create a new DataFrame from the duplicated rows
+                        # Extract those columns
                         df_columns = df.iloc[:, matching_indices]
+                        # Flatten them into a single column
+                        exploded_values = df_columns.values.flatten()
+                        # Repeat each row once per "Medical Concerns" column
+                        repeat_count = len(matching_indices)
+                        repeated_rows = df.loc[df.index.repeat(repeat_count)].reset_index(drop=True)
+                        new_df[col_name] = exploded_values
                     else:
-                        matching_indices_1 = [i for i, col in enumerate(df.columns) if col_name == col]
-                        df_columns = df.iloc[:, matching_indices_1]
-                        df_columns = df_columns.loc[df_columns.index.repeat(len(matching_indices))]
-                        
-                    new_df[col_name] = pd.DataFrame(df_columns.values.flatten(), columns=[col_name])
+                        # Regular column – just repeat it to match the expanded row count
+                        if col_name in df.columns:
+                            repeated_col = df[col_name].loc[df.index.repeat(len(matching_indices))].reset_index(drop=True)
+                            new_df[col_name] = repeated_col
+                        else:
+                            new_df[col_name] = None  # Fill with None if column doesn't exist
                 else:
                     matching_indices = [i for i, col in enumerate(df.columns) if col_name == col]
                     df_columns = df.iloc[:, matching_indices]
