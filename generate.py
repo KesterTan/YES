@@ -134,6 +134,17 @@ nodeDataArray = [
         ]
     },
     {
+        "key": "Work Visit",
+        "location": "go.Point(1000, 1200)",
+        "items": [
+            {"name": "Worksite Location", "isKey": False, "figure": "Hexagon", "color": "blue"},
+            {"name": "Date Joined", "isKey": False, "figure": "Hexagon", "color": "blue"},
+            {"name": "Worksite Visit Day", "isKey": False, "figure": "Hexagon", "color": "blue"},
+            {"name": "Worksite Visit Time", "isKey": False, "figure": "Hexagon", "color": "blue"},
+            {"name": "Worksite Schedule", "isKey": False, "figure": "Hexagon", "color": "blue"},
+        ]
+    },
+    {
         "key": "School Profile",
         "location": "go.Point(100, 5)",
         "items": [
