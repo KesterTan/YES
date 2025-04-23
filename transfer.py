@@ -65,6 +65,16 @@ nodeDataArray = [
         ],
     },
     {
+        "key": "Work Visit",
+        "items": [
+            {"name": "Worksite Location", "isKey": False},
+            {"name": "Date Joined", "isKey": False},
+            {"name": "Worksite Visit Day", "isKey": False},
+            {"name": "Worksite Visit Time", "isKey": False},
+            {"name": "Worksite Schedule", "isKey": False},
+        ]
+    },
+    {
         "key": "Program",
         "items": [
             {"name": "Program Name", "isKey": True},
