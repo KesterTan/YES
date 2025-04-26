@@ -1,4 +1,4 @@
-# YES Scripts
+# YES
 This contains: 
 - HTML files that create the [ERD diagram](https://yes-rouge-zeta.vercel.app/) hosted using Vercel.
 - A series of scripts which would generate mock data, process and transfer data from a CSV to another so that it can be imported to Airtable. For more information, refer to the [documentation](https://docs.google.com/document/d/1y1g4TY9T2DpEGHrZiUBwMD4rqYo6wuWVB4_pVjbkZRU/edit?usp=sharing).
