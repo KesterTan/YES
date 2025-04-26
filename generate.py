@@ -8,7 +8,6 @@ fake = Faker()
 # Number of mock rows to generate per table
 NUM_ROWS = 10
 
-# Define your nodeDataArray exactly as in your specification
 nodeDataArray = [
     {
         "key": "Student",
@@ -362,7 +361,6 @@ def main():
         table_name = table["key"]  # e.g. "Program", "Course"
         columns = [item["name"] for item in table["items"]]
 
-        # We'll add a special column "Row_ID" to store a unique ID for each row
         extra_id_column = "Row_ID"
         all_columns = [extra_id_column] + columns
 
@@ -374,7 +372,6 @@ def main():
 
             for _ in range(NUM_ROWS):
                 row_data = {}
-                # Generate a random ID for each row
                 row_data[extra_id_column] = str(fake.random_number(digits=7))
 
                 for col in columns:

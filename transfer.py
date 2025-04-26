@@ -1,6 +1,5 @@
 import pandas as pd
 
-# This is your nodeDataArray structure, repeated for clarity.
 nodeDataArray = [
     {
         "key": "Student",
