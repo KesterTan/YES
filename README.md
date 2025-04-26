@@ -7,6 +7,7 @@ This contains:
 Vercel currently reads from `Index.html`. Editing this file would change the ERD diagram on the [site](https://yes-rouge-zeta.vercel.app/). 
 
 ## Generate.py — To generate mock CSVs
+To generate more columns per table, change NUM_ROWS at the start of the file to the number of rows you want to generate per table. 
 - Run `pip3 install faker`
 - Run `python3 generate.py`
 
